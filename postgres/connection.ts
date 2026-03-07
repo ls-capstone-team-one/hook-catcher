@@ -57,31 +57,4 @@ async function disconnect(): Promise<void> {
   }
 }
 
-/**
- * Executes a SQL query against the PostgreSQL database.
- * @param text - The SQL query string (supports parameterized queries against SQL injection).
- * @param params - Optional array of parameter values for the query.
- * @returns The query result.
- */
-async function query(
-  text: string,
-  params: unknown[] = []
-): Promise<QueryResult> {
-  if (!client) {
-    throw new Error(
-      "No active database connection. Call connect() before querying."
-    );
-  }
-
-  try {
-    const result = await client.query(text, params);
-    return result;
-  } catch (error) {
-    console.error("Query failed:", error);
-    console.error("Query:", text);
-    console.error("Params:", params);
-    throw error;
-  }
-}
-
-export default { connect, disconnect, query };
+export default { connect, disconnect };
