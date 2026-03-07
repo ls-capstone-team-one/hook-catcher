@@ -4,12 +4,12 @@ import morgan from "morgan";
 
 const app = express();
 
-// --------------- Middleware ---------------
+// Middleware
 app.use(cors());
 app.use(morgan("dev"));
 app.use(express.json());
 
-// --------------- Routes ---------------
+// Routes
 
 app.get("/health", (_req, res) => {
   res.json({ status: "ok" });
