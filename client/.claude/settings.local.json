@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm create:*)",
+      "Bash(npx create-airbnb-x-config:*)",
+      "Bash(npm install:*)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(npx shadcn@latest:*)",
+      "Bash(npx prettier:*)",
+      "WebFetch(domain:ui.shadcn.com)",
+      "Bash(gh api:*)"
+    ]
+  }
+}
