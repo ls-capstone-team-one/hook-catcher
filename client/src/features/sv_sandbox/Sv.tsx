@@ -48,27 +48,45 @@ export function Sandbox() {
   )
 }
 
+const codePlaceholder = `Accept: */* Connection: close Content-Length: 9 Content-Type:
+            application/x-www-form-urlencoded User-Agent: curl/7.81.0 X-City:
+            Durham X-Country: US X-Forwarded-For: 108.83.203.18 X-Real-Ip:
+            108.83.203.18`
+
 function MyAccordion() {
   return (
     <Accordion type="single" collapsible defaultValue="item-1">
       <AccordionItem value="item-1">
         <AccordionTrigger>Headers</AccordionTrigger>
         <AccordionContent>
-          <code className="text-sm">
-            Accept: */* Connection: close Content-Length: 9 Content-Type:
-            application/x-www-form-urlencoded User-Agent: curl/7.81.0 X-City:
-            Durham X-Country: US X-Forwarded-For: 108.83.203.18 X-Real-Ip:
-            108.83.203.18
-          </code>
+          <SimpleCodeBlock content={codePlaceholder}/>
         </AccordionContent>
       </AccordionItem>
       <AccordionItem value="item-2">
         <AccordionTrigger>Body</AccordionTrigger>
         <AccordionContent>
-          <code>{`{"hello": "world"}`} </code>
+          {/* <code>{`{"hello": "world"}`} </code> */}
+          <SimpleCodeBlock content={`"hello": "world"`} />
         </AccordionContent>
       </AccordionItem>
     </Accordion>
+  )
+}
+
+type SimpleCodeBlockProps = {
+  content: string
+}
+
+function SimpleCodeBlock({ content }: SimpleCodeBlockProps) {
+  return (
+    <Item className="bg-secondary">
+      <ItemContent>
+        <p>{content}</p>
+      </ItemContent>
+      <ItemMedia variant="icon">
+        <ClipboardCopy />
+      </ItemMedia>
+    </Item>
   )
 }
 
