@@ -1,4 +1,4 @@
-import { Client, ClientConfig, QueryResult } from "pg";
+import { Client, ClientConfig } from "pg";
 
 // Default connection configuration
 const defaultConfig: ClientConfig = {
