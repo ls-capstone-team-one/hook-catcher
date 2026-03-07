@@ -55,21 +55,23 @@ const codePlaceholder = `Accept: */* Connection: close Content-Length: 9 Content
 
 function MyAccordion() {
   return (
-    <Accordion type="single" collapsible defaultValue="item-1">
-      <AccordionItem value="item-1">
-        <AccordionTrigger>Headers</AccordionTrigger>
-        <AccordionContent>
-          <SimpleCodeBlock content={codePlaceholder}/>
-        </AccordionContent>
-      </AccordionItem>
-      <AccordionItem value="item-2">
-        <AccordionTrigger>Body</AccordionTrigger>
-        <AccordionContent>
-          {/* <code>{`{"hello": "world"}`} </code> */}
-          <SimpleCodeBlock content={`"hello": "world"`} />
-        </AccordionContent>
-      </AccordionItem>
-    </Accordion>
+    <div className="p-1">
+      <Accordion className="p-2" type="single" collapsible defaultValue="item-1">
+        <AccordionItem value="item-1">
+          <AccordionTrigger>Headers</AccordionTrigger>
+          <AccordionContent>
+            <SimpleCodeBlock content={codePlaceholder}/>
+          </AccordionContent>
+        </AccordionItem>
+        <AccordionItem value="item-2">
+          <AccordionTrigger>Body</AccordionTrigger>
+          <AccordionContent>
+            {/* <code>{`{"hello": "world"}`} </code> */}
+            <SimpleCodeBlock content={`"hello": "world"`} />
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
+    </div>
   )
 }
 
