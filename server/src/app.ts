@@ -2,6 +2,8 @@ import express from "express";
 import cors from "cors";
 import morgan from "morgan";
 
+import binHandler from "./handlers/binHandler";
+
 const app = express();
 
 // Middleware
@@ -15,8 +17,8 @@ app.get("/health", (_req, res) => {
   res.json({ status: "ok" });
 });
 
-// TODO: Mount API routes here
-// app.use("/api/bins", binHandler);
+// Mount API routes
+app.use("/api/bins", binHandler);
 
 // TODO: Mount catch-all webhook route here
 // app.all("/hook/:binId/*", webhookHandler);
