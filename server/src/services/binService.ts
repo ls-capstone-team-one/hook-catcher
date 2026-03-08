@@ -1,16 +1,12 @@
-import {
-  createBin as repoCreateBin,
-  Bin,
-} from "../db_connections/postgres/binRepo";
+import { nanoid } from "nanoid";
+import { createBin as repoCreateBin } from "../db_connections/postgres/binRepo";
+import { Bin, BinResponse } from "../types";
 
-export interface BinResponse {
-  bin: Bin;
-  sendUrl: string;
-  inspectUrl: string;
-}
+const BIN_ID_LENGTH = 10;
 
 export async function createBin(): Promise<BinResponse> {
-  const bin = await repoCreateBin();
+  const id = nanoid(BIN_ID_LENGTH);
+  const bin: Bin = await repoCreateBin(id);
 
   const inspectUrl = `/api/bins/${bin.id}`;
   const sendUrl = `/${bin.id}`;
