@@ -1,7 +1,7 @@
 import { StrictMode } from "react"
 import { createRoot } from "react-dom/client"
 import { BrowserRouter, Routes, Route } from "react-router"
-import Sv from "./features/sv_sandbox/Sv.tsx"
+import Sv from "./features/sv_sandbox/request-details.tsx"
 import Jm from "./features/jm_sandbox/Jm.tsx"
 
 import "./index.css"

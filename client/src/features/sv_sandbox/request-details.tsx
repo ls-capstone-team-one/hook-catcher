@@ -21,13 +21,12 @@ import {
 import {
   Clock,
   CalendarDays,
-  ClipboardCopy,
 } from "lucide-react"
 
-import { Button } from "@/components/ui/button"
 // import { useState } from "react"
 import { env } from "@/config/env"
 import NavBar from "./nav-bar"
+import CopyButton from "./button-copy"
 
 export default function BinView() {
   return (
@@ -35,17 +34,17 @@ export default function BinView() {
       <NavBar />
       <BasketInfoHeader />
       <section className="mx-auto grid max-w-4xl grid-cols-[repeat(auto-fill,minmax(28rem,1fr))] items-start">
-        <Request />
-        <Request />
-        <Request />
-        <Request />
-        <Request />
-        <Request />
-        <Request />
-        <Request />
-        <Request />
-        <Request />
-        <Request />
+        <RequestDetails />
+        <RequestDetails />
+        <RequestDetails />
+        <RequestDetails />
+        <RequestDetails />
+        <RequestDetails />
+        <RequestDetails />
+        <RequestDetails />
+        <RequestDetails />
+        <RequestDetails />
+        <RequestDetails />
       </section>
     </div>
   )
@@ -74,27 +73,9 @@ function BasketInfoHeader() {
   )
 }
 
-function CopyButton({
-  content,
-  className = "",
-}: {
-  content: string
-  className?: string
-}) {
-  return (
-    <Button
-      variant="ghost"
-      size="icon"
-      aria-label="Copy to clipboard"
-      className={className}
-      onClick={() => navigator.clipboard.writeText(content)}
-    >
-      <ClipboardCopy />
-    </Button>
-  )
-}
 
-function Request() {
+
+function RequestDetails() {
   return (
     <section>
       <Card className="m-4 max-w-md">
@@ -104,8 +85,8 @@ function Request() {
           <DateStamp />
         </CardHeader>
         <CardContent>
-          <Path path="abc123" />
-          <MyAccordion />
+          <RequestPath path="abc123" />
+          <RequestHeadersAndBody />
         </CardContent>
         {/* <CardFooter> */}
         {/* <p>Lorem ipsum footer</p> */}
@@ -120,7 +101,7 @@ const codePlaceholder = `Accept: */* Connection: close Content-Length: 9 Content
             Durham X-Country: US X-Forwarded-For: 108.83.203.18 X-Real-Ip:
             108.83.203.18`
 
-function MyAccordion() {
+function RequestHeadersAndBody() {
   return (
     <Accordion type="single" collapsible defaultValue="item-1">
       <AccordionItem value="item-1">
@@ -161,7 +142,7 @@ function SimpleCodeBlock({
   )
 }
 
-function Path({ path }: { path: string }) {
+function RequestPath({ path }: { path: string }) {
   return (
     <Item className="bg-primary text-primary-foreground">
       <ItemContent>
