@@ -24,24 +24,51 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from "@/components/ui/navigation-menu"
+
 import { Webhook, Clock, CalendarDays, ClipboardCopy } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 export function Sandbox() {
   return (
-    <div className="grid grid-cols-[repeat(auto-fill,minmax(28rem,1fr))] items-start">
-      <Request />
-      <Request />
-      <Request />
-      <Request />
-      <Request />
-      <Request />
-      <Request />
-      <Request />
-      <Request />
-      <Request />
-      <Request />
+    <div className="w-full">
+      <NavBar />
+      <div className="mx-auto max-w-4xl grid grid-cols-[repeat(auto-fill,minmax(28rem,1fr))] items-start">
+        <Request />
+        <Request />
+        <Request />
+        <Request />
+        <Request />
+        <Request />
+        <Request />
+        <Request />
+        <Request />
+        <Request />
+        <Request />
+      </div>
     </div>
+  )
+}
+
+function NavBar() {
+  return (
+    <NavigationMenu className="bg-secondary w-full">
+      <NavigationMenuList>
+        <NavigationMenuItem>
+          <NavigationMenuLink href="/">RequestBin</NavigationMenuLink>
+        </NavigationMenuItem>
+        <NavigationMenuItem>
+          <NavigationMenuLink href="/">Docs</NavigationMenuLink>
+        </NavigationMenuItem>
+      </NavigationMenuList>
+    </NavigationMenu>
   )
 }
 
@@ -58,9 +85,9 @@ function Request() {
           <Path />
           <MyAccordion />
         </CardContent>
-        <CardFooter>
-          <p>Lorem ipsum footer</p>
-        </CardFooter>
+        {/* <CardFooter> */}
+          {/* <p>Lorem ipsum footer</p> */}
+        {/* </CardFooter> */}
       </Card>
     </section>
   )
