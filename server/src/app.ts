@@ -18,7 +18,7 @@ app.get("/health", (_req, res) => {
 });
 
 // Mount API routes
-app.use("/api/bins", binHandler);
+app.use("/web/bins", binHandler);
 
 // TODO: Mount catch-all webhook route here
 // app.all("/hook/:binId/*", webhookHandler);
