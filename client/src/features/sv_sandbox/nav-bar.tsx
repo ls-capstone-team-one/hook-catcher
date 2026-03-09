@@ -23,9 +23,10 @@ import { Button } from "@/components/ui/button"
 
 import { useHideOnScrollDown } from "@/hooks/useHideOnScrollDown"
 import { RefreshCwIcon, RotateCwIcon, Shredder, Trash, Trash2 } from "lucide-react"
+import { type ReactNode } from "react"
 
 
-export default function NavBar() {
+export default function NavBar({ children }: { children: ReactNode }) {
   const hidden = useHideOnScrollDown()
   const components = [
     {
@@ -88,7 +89,7 @@ export default function NavBar() {
           </NavigationMenuList>
         </div>
         <div>
-          <BasketEditButtonBar />
+          {children}
         </div>
       </NavigationMenu>
     </div>
