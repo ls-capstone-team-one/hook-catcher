@@ -11,7 +11,7 @@ const defaultConfig: MongoClientOptions = {
 const defaultUri: string =
   process.env.MONGO_URI ?? "mongodb://localhost:27017";
 
-const databaseName: string = process.env.MONGO_DB_NAME ?? "hookcather";
+const databaseName: string = process.env.MONGO_DB_NAME ?? "hookcatcher";
 
 let client: MongoClient | null = null;
 

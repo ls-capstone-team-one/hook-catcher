@@ -1,5 +1,5 @@
 import { nanoid } from "nanoid";
-import { createBin as repoCreateBin } from "../db_connections/postgres/binRepo";
+import { createBin as repoCreateBin } from "../db_connections/binRepo";
 import { Bin, BinResponse } from "../types";
 
 const BIN_ID_LENGTH = 10;
