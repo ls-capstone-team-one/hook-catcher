@@ -51,6 +51,7 @@ import {
 
 import { Webhook, Clock, CalendarDays, ClipboardCopy, ArrowLeftIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { useState } from "react"
 
 export function Sandbox() {
   return (
@@ -119,6 +120,7 @@ function NavBar() {
         <NavigationMenuItem>
           <NavigationMenuLink href="https://github.com/ls-capstone-team-one/hook-catcher">Docs</NavigationMenuLink>
         </NavigationMenuItem>
+        <ButtonGroupDemo />
       </NavigationMenuList>
     </NavigationMenu>
   )
@@ -143,7 +145,7 @@ function ListItem({
 }
 
 export function ButtonGroupDemo() {
-  const [label, setLabel] = React.useState("personal")
+  const [label, setLabel] = useState("personal")
 
   return (
     <ButtonGroup>
