@@ -116,7 +116,7 @@ function NavBar() {
     <div
       className={`sticky top-0 z-50 w-full bg-secondary transition-transform duration-300 ${hidden ? "-translate-y-full" : "translate-y-0"}`}
     >
-      <NavigationMenu className="flex w-full max-w-full justify-between p-3">
+      <NavigationMenu className="mx-auto max-w-4xl flex w-full justify-between p-3">
         <div>
           <NavigationMenuList>
             <NavigationMenuItem>
@@ -154,7 +154,7 @@ function NavBar() {
           </NavigationMenuList>
         </div>
         <div>
-          <BasketButtons />
+          <BasketEditButtonBar />
         </div>
       </NavigationMenu>
     </div>
@@ -179,8 +179,7 @@ function ListItem({
   )
 }
 
-function BasketButtons() {
-  const [label, setLabel] = useState("personal")
+function BasketEditButtonBar() {
 
   return (
     <ButtonGroup>
@@ -227,7 +226,7 @@ function BasketInfoHeader() {
   const basketUrl = env.APP_URL + "/" + placeholder.id
 
   return (
-    <section className="p-3">
+    <section className="mx-auto max-w-4xl p-3">
       <h1 className="text-2xl font-bold">Basket: {placeholder.id}</h1>
       <p>Bin URL: {basketUrl} <CopyButton content={basketUrl}/></p>
       {/* <p><Tally5 className="inline" /> Count = {placeholder.count}</p> */}
