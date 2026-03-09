@@ -62,29 +62,20 @@ import {
   FlameIcon,
   Shredder,
   Trash2,
+  Tally5,
+  Tally5Icon,
 } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { useState, useEffect, useRef } from "react"
 
-function useHideOnScrollDown() {
-  const [hidden, setHidden] = useState(false)
-  const lastY = useRef(0)
-  useEffect(() => {
-    const onScroll = () => {
-      const y = window.scrollY
-      setHidden(y > lastY.current && y > 64)
-      lastY.current = y
-    }
-    window.addEventListener("scroll", onScroll, { passive: true })
-    return () => window.removeEventListener("scroll", onScroll)
-  }, [])
-  return hidden
-}
+import { Button } from "@/components/ui/button"
+import { useState } from "react"
+import { useHideOnScrollDown } from "@/hooks/useHideOnScrollDown"
+import { env } from "@/config/env"
 
 export function Sandbox() {
   return (
     <div className="w-full">
       <NavBar />
+      <BasketInfoHeader />
       <section className="mx-auto grid max-w-4xl grid-cols-[repeat(auto-fill,minmax(28rem,1fr))] items-start">
         <Request />
         <Request />
@@ -122,45 +113,50 @@ function NavBar() {
     },
   ]
   return (
-    <div className={`sticky top-0 z-50 w-full bg-secondary transition-transform duration-300 ${hidden ? "-translate-y-full" : "translate-y-0"}`}>
-    <NavigationMenu className="flex w-full max-w-full justify-between p-3">
-      <div>
-        <NavigationMenuList>
-          <NavigationMenuItem>
-            <NavigationMenuLink href="/">RequestBin</NavigationMenuLink>
-          </NavigationMenuItem>
-          <NavigationMenuItem className="flex">
-            <NavigationMenuTrigger
-              onPointerMove={(e) => e.preventDefault()}
-              onPointerLeave={(e) => e.preventDefault()}
-            >
-              Baskets
-            </NavigationMenuTrigger>
-            <NavigationMenuContent>
-              <ul className="grid w-[200px] gap-2">
-                {components.map((component) => (
-                  <ListItem
-                    key={component.title}
-                    title={component.title}
-                    href={component.href}
-                  >
-                    {component.count} requests
-                  </ListItem>
-                ))}
-              </ul>
-            </NavigationMenuContent>
-          </NavigationMenuItem>
-          <NavigationMenuItem>
-            <NavigationMenuLink className="text-subtle" href="https://github.com/ls-capstone-team-one/hook-catcher">
-              GitHub
-            </NavigationMenuLink>
-          </NavigationMenuItem>
-        </NavigationMenuList>
-      </div>
-      <div>
-        <BasketButtons />
-      </div>
-    </NavigationMenu>
+    <div
+      className={`sticky top-0 z-50 w-full bg-secondary transition-transform duration-300 ${hidden ? "-translate-y-full" : "translate-y-0"}`}
+    >
+      <NavigationMenu className="flex w-full max-w-full justify-between p-3">
+        <div>
+          <NavigationMenuList>
+            <NavigationMenuItem>
+              <NavigationMenuLink className="text-lg" href="/">RequestBin</NavigationMenuLink>
+            </NavigationMenuItem>
+            <NavigationMenuItem className="flex">
+              <NavigationMenuTrigger
+                onPointerMove={(e) => e.preventDefault()}
+                onPointerLeave={(e) => e.preventDefault()}
+              >
+                Baskets
+              </NavigationMenuTrigger>
+              <NavigationMenuContent>
+                <ul className="grid w-[200px] gap-2">
+                  {components.map((component) => (
+                    <ListItem
+                      key={component.title}
+                      title={component.title}
+                      href={component.href}
+                    >
+                      {component.count} requests
+                    </ListItem>
+                  ))}
+                </ul>
+              </NavigationMenuContent>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavigationMenuLink
+                className="text-subtle"
+                href="https://github.com/ls-capstone-team-one/hook-catcher"
+              >
+                GitHub
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+          </NavigationMenuList>
+        </div>
+        <div>
+          <BasketButtons />
+        </div>
+      </NavigationMenu>
     </div>
   )
 }
@@ -223,9 +219,17 @@ function BasketButtons() {
 }
 
 function BasketInfoHeader() {
+  const placeholder = {
+    id: "48wje34",
+    count: 42
+  }
   return (
-    <section>
-    
+    <section className="p-3">
+      <h1 className="text-2xl font-bold">Basket: {placeholder.id}</h1>
+      <p>Requests are collected at {env.APP_URL}/{placeholder.id} <ClipboardCopy className="inline" /></p>
+      {/* <p><Tally5 className="inline" /> Count = {placeholder.count}</p> */}
+      <p>Count = {placeholder.count}</p>
+      
     </section>
   )
 }
