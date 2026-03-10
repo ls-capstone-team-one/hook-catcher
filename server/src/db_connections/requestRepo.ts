@@ -7,7 +7,7 @@ import { RequestDocument, RequestRecord } from "../types";
 export async function createRequestRecord(binId: string, mongoId: string, method: string, path: string): Promise<RequestRecord> {
   const client = await dbConnection.connect();
 
-  const insertQuery = `INSERT INTO requests (binId, mongoId, method, path) VALUES ($1, $2, $3, $4) RETURNING *;`
+  const insertQuery = `INSERT INTO requests (bin_id, mongo_id, method, path) VALUES ($1, $2, $3, $4) RETURNING *;`
   const result = await client.query(insertQuery, [binId, mongoId, method, path]);
 
   return result.rows[0] as RequestRecord;
