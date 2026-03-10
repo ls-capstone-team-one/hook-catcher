@@ -1,0 +1,37 @@
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import type { Bin } from "./schema";
+
+type BinListProps = {
+  bins: Bin[];
+};
+
+export function BinList({ bins }: BinListProps) {
+  return (
+    <section className="w-full px-4 pb-8 sm:px-6 lg:px-8">
+      <Card className="mx-auto w-full max-w-5xl rounded-[2rem] border bg-card shadow-sm">
+        <CardHeader className="px-6 pb-3 pt-8 sm:px-10">
+          <h2 className="text-2xl font-semibold tracking-tight">Bins</h2>
+        </CardHeader>
+        <CardContent className="px-6 pb-8 sm:px-10">
+          {bins.length === 0 ? (
+            <p className="text-muted-foreground">No bins yet.</p>
+          ) : (
+            <ul className="space-y-3">
+              {bins.map((bin) => (
+                <li
+                  key={bin.id}
+                  className="rounded-xl border bg-background px-4 py-3"
+                >
+                  <p className="font-medium">{bin.id}</p>
+                  <p className="text-sm text-muted-foreground">
+                    {bin.inspectUrl}
+                  </p>
+                </li>
+              ))}
+            </ul>
+          )}
+        </CardContent>
+      </Card>
+    </section>
+  );
+}
