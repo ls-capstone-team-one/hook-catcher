@@ -11,7 +11,7 @@ export async function createBin(id: string): Promise<Bin> {
   return result.rows[0] as Bin;
 }
 
-async function findBinById(id: string): Promise<Bin | null> {
+export async function findBinById(id: string): Promise<Bin | null> {
   const client = await dbConnection.connect();
 
   
