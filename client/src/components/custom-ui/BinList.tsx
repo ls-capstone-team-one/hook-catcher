@@ -1,4 +1,5 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Link } from 'react-router-dom';
 import type { Bin } from "./schema";
 
 type BinListProps = {
@@ -24,7 +25,7 @@ export function BinList({ bins }: BinListProps) {
                 >
                   <p className="font-medium">{bin.id}</p>
                   <p className="text-sm text-muted-foreground">
-                    {bin.inspectUrl}
+                    <Link to={bin.inspectUrl}>{bin.inspectUrl}</Link>
                   </p>
                 </li>
               ))}
