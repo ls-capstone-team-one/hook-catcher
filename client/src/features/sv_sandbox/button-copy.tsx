@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button"
+import { cn } from "@/lib/utils"
 import { Copy } from "lucide-react"
 
 export default function CopyButton({
@@ -13,7 +14,7 @@ export default function CopyButton({
       variant="ghost"
       size="icon"
       aria-label="Copy to clipboard"
-      className={className}
+      className={cn("hover:filter-[invert(20%)]", className)}
       onClick={() => navigator.clipboard.writeText(content)}
     >
       <Copy />
