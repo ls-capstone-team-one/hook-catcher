@@ -23,18 +23,18 @@ export function NewBinCreator({ onCreateBin }: NewBinCreatorProps) {
   return (
     <section className="w-full px-4 py-8 sm:px-6 lg:px-8">
       <Card className="mx-auto w-full max-w-5xl rounded-[2rem] border bg-card shadow-sm">
-        <CardHeader className="items-center px-6 pb-4 pt-10 text-center sm:px-10">
+        <CardHeader className="justify-items-center px-6 pb-4 pt-10 text-center sm:px-10">
           <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl md:text-6xl">
             {title}
           </h1>
 
-          <p className="mt-4 max-w-2xl text-balance text-base text-muted-foreground sm:text-lg">
+          <p className="mt-4 max-w-2xl text-balance text-center text-base text-muted-foreground sm:text-lg">
             {description}
           </p>
         </CardHeader>
 
         <CardContent className="flex justify-center px-6 pb-10 sm:px-10">
-          <div className="w-full max-w-2xl">
+          <div className="flex w-full max-w-2xl justify-center">
             <Button
               type="button"
               onClick={handleCreateBin}

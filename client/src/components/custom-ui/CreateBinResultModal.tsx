@@ -29,16 +29,20 @@ export function CreateBinResultModal({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-start justify-center bg-black/55 px-4 py-8 sm:px-6 sm:py-12"
+      className="fixed inset-0 z-50 flex items-start justify-center px-4 py-8 sm:px-6 sm:py-12"
       onClick={onClose}
       role="presentation"
     >
+      <div
+        className="absolute inset-0"
+        style={{ backgroundColor: "rgba(0, 0, 0, 0.45)" }}
+      />
       <Card
-        className="w-full max-w-3xl gap-0 overflow-hidden rounded-md border bg-card text-card-foreground shadow-2xl"
+        className="relative z-10 w-full max-w-3xl gap-0 overflow-hidden rounded-md border border-border bg-card py-0 text-card-foreground shadow-2xl"
         onClick={(event) => event.stopPropagation()}
       >
         <CardHeader
-          className={`flex-row items-center justify-between px-4 py-3 sm:px-5 ${
+          className={`rounded-none flex-row items-center justify-between px-4 py-3 sm:px-5 ${
             isSuccess ? "bg-emerald-500 text-white" : "bg-red-500 text-white"
           }`}
         >

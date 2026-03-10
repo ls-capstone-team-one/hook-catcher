@@ -10,7 +10,7 @@ import {
 } from "./schema";
 
 
-const BASE_URL = "http://localhost:3001";
+const BASE_URL = "http://localhost:3000";
 const CREATE_BIN_ENDPOINT = `${BASE_URL}/api/bins`;
 
 export function Home() {
