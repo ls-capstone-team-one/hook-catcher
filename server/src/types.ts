@@ -1,11 +1,9 @@
 import { IncomingHttpHeaders } from "http";
 
-
 export interface Bin {
   id: string;
   created_at: Date;
   expires_at: Date;
-  request_count: number;
 }
 
 export interface BinResponse {
