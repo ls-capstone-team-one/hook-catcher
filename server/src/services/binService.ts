@@ -8,7 +8,7 @@ export async function createBin(): Promise<BinResponse> {
   const id = nanoid(BIN_ID_LENGTH);
   const bin: Bin = await repoCreateBin(id);
 
-  const inspectUrl = `/web/bins/${bin.id}`;
+  const inspectUrl = `/api/bins/${bin.id}`;
   const sendUrl = `/${bin.id}`;
 
   return {
