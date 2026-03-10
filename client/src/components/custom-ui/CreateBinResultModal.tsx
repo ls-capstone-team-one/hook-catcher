@@ -42,7 +42,7 @@ export function CreateBinResultModal({
         onClick={(event) => event.stopPropagation()}
       >
         <CardHeader
-          className={`rounded-none flex-row items-center justify-between px-4 py-3 sm:px-5 ${
+          className={`grid-cols-[1fr_auto] rounded-none items-center px-4 py-3 sm:px-5 ${
             isSuccess ? "bg-emerald-500 text-white" : "bg-red-500 text-white"
           }`}
         >
