@@ -21,6 +21,7 @@ export const BinSchema = PersistedBinSchema.extend({
   }),
 });
 
+export const PersistedBinsSchema = z.array(PersistedBinSchema);
 export const BinsSchema = z.array(BinSchema);
 
 export const BinApiResponseSchema = z.object({
@@ -35,6 +36,8 @@ export const BinApiResponseSchema = z.object({
 
 export type Bin = z.infer<typeof BinSchema>;
 export type Bins = z.infer<typeof BinsSchema>;
+export type PersistedBin = z.infer<typeof PersistedBinSchema>;
+export type PersistedBins = z.infer<typeof PersistedBinsSchema>;
 export type BinApiResponse = z.infer<typeof BinApiResponseSchema>;
 
 export function toBin(response: BinApiResponse): Bin {

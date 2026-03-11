@@ -1,9 +1,9 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Link } from 'react-router-dom';
-import type { Bin } from "./schema";
+import { Link } from "react-router-dom";
+import type { PersistedBin } from "./schema";
 
 type BinListProps = {
-  bins: Bin[];
+  bins: PersistedBin[];
 };
 
 export function BinList({ bins }: BinListProps) {
@@ -18,17 +18,21 @@ export function BinList({ bins }: BinListProps) {
             <p className="text-muted-foreground">No bins yet.</p>
           ) : (
             <ul className="space-y-3">
-              {bins.map((bin) => (
-                <li
-                  key={bin.id}
-                  className="rounded-xl border bg-background px-4 py-3"
-                >
-                  <p className="font-medium">{bin.id}</p>
-                  <p className="text-sm text-muted-foreground">
-                    <Link to={bin.inspectUrl}>{bin.inspectUrl}</Link>
-                  </p>
-                </li>
-              ))}
+              {bins.map((bin) => {
+                const inspectUrl = `/bins/${bin.id}`;
+
+                return (
+                  <li
+                    key={bin.id}
+                    className="rounded-xl border bg-background px-4 py-3"
+                  >
+                    <p className="font-medium">{bin.id}</p>
+                    <p className="text-sm text-muted-foreground">
+                      <Link to={inspectUrl}>{inspectUrl}</Link>
+                    </p>
+                  </li>
+                );
+              })}
             </ul>
           )}
         </CardContent>

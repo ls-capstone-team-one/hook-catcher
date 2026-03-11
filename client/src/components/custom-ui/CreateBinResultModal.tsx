@@ -6,10 +6,10 @@ import {
   CardHeader,
 } from "@/components/ui/card";
 import { Link } from "react-router-dom";
-import type { Bin } from "./schema";
+import type { PersistedBin } from "./schema";
 
 export type CreateBinResult =
-  | { status: "success"; bin: Bin }
+  | { status: "success"; bin: PersistedBin }
   | { status: "error" };
 
 type CreateBinResultModalProps = {
@@ -26,7 +26,10 @@ export function CreateBinResultModal({
   }
 
   const isSuccess = result.status === "success";
+  const binId = isSuccess ? result.bin.id : null;
   const title = isSuccess ? "Created" : "Failed to Create Bin";
+  const sendUrl = binId ? `/${binId}` : null;
+  const inspectUrl = binId ? `/bins/${binId}` : null;
 
   return (
     <div
@@ -67,7 +70,7 @@ export function CreateBinResultModal({
               <p>
                 Your API path is:{" "}
                 <span className="rounded-sm bg-amber-200 px-1 text-black">
-                  {result.bin.sendUrl}
+                  {sendUrl}
                 </span>
               </p>
             </>
@@ -82,8 +85,7 @@ export function CreateBinResultModal({
           </Button>
           {isSuccess && (
             <Button type="button" asChild>
-              {/* <a href={result.bin.inspectUrl}>Open Bin</a> */}
-              <Link to={result.bin.inspectUrl}>Open Bin</Link>
+              <Link to={inspectUrl ?? "/"}>Open Bin</Link>
             </Button>
           )}
         </CardFooter>
