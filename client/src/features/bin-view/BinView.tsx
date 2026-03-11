@@ -20,10 +20,11 @@ import {
 } from "lucide-react"
 
 import { env } from "@/config/env"
-import NavBar from "./nav-bar"
-import CopyButton from "./button-copy"
+import NavBar from "@/components/custom-ui/nav-bar"
+import CopyButton from "@/components/custom-ui/button-copy"
 import { Button } from "@/components/ui/button"
 import { ButtonGroup } from "@/components/ui/button-group"
+import * as binService from "./fetch_bins.js"
 
 import {
   DropdownMenu,
@@ -34,6 +35,8 @@ import {
 } from "@/components/ui/dropdown-menu"
 
 export default function BinView() {
+  binService.getAllBins();
+  
   return (
     <div>
       <NavBar>
