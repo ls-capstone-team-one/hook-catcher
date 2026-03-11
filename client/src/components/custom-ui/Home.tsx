@@ -28,6 +28,7 @@ export function Home() {
       }
 
       const data = await response.json();
+      console.log(data);
       const createBinResponse = BinApiResponseSchema.parse(data);
       const createdBin = toBin(createBinResponse);
 
