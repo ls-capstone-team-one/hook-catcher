@@ -5,7 +5,9 @@ import {
   CardFooter,
   CardHeader,
 } from "@/components/ui/card";
+import { env } from "@/config/env";
 import { Link } from "react-router-dom";
+import CopyButton from "./button-copy";
 import type { PersistedBin } from "./schema";
 
 export type CreateBinResult =
@@ -30,6 +32,7 @@ export function CreateBinResultModal({
   const title = isSuccess ? "Created" : "Failed to Create Bin";
   const sendUrl = binId ? `/${binId}` : null;
   const inspectUrl = binId ? `/bins/${binId}` : null;
+  const fullSendUrl = sendUrl ? `${env.APP_URL}${sendUrl}` : null;
 
   return (
     <div
@@ -68,9 +71,15 @@ export function CreateBinResultModal({
             <>
               <p>Bin "{result.bin.id}" is successfully created!</p>
               <p>
-                Your API path is:{" "}
-                <span className="rounded-sm bg-amber-200 px-1 text-black">
-                  {sendUrl}
+                Your API URL is:{" "}
+                <span className="inline-flex items-center gap-1 rounded-sm bg-amber-200 px-1 text-black">
+                  <span>{fullSendUrl}</span>
+                  {fullSendUrl && (
+                    <CopyButton
+                      content={fullSendUrl}
+                      className="h-7 w-7 text-black hover:bg-black/10"
+                    />
+                  )}
                 </span>
               </p>
             </>
