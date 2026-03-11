@@ -30,7 +30,7 @@ export function Home() {
 
         const data = await response.json();
         const parsedBins = PersistedBinsSchema.parse(data);
-        setBins(parsedBins);
+        setBins([...parsedBins].sort((a, b) => b.created_at.getTime() - a.created_at.getTime()));
       } catch (err) {
         console.error(err);
       }
@@ -51,7 +51,7 @@ export function Home() {
       const createBinResponse = BinApiResponseSchema.parse(data);
       const createdBin = createBinResponse.bin;
 
-      setBins((currentBins) => [...currentBins, createdBin]);
+      setBins((currentBins) => [createdBin, ...currentBins]);
       setCreateResult({ status: "success", bin: createdBin });
     } catch (err) {
       setCreateResult({ status: "error" });
