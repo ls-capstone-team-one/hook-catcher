@@ -119,6 +119,27 @@ Start the `mongod` process:
 sudo systemctl start mongod
 ```
 
+Expected output:
+```bash
+$ sudo systemctl status mongod
+● mongod.service - MongoDB Database Server
+     Loaded: loaded (/lib/systemd/system/mongod.service; disabled; vendor preset: enabled)
+     Active: active (running) since Wed 2026-03-11 17:45:11 EDT; 1s ago
+       Docs: https://docs.mongodb.org/manual
+   Main PID: 44647 (mongod)
+     Memory: 102.0M
+        CPU: 406ms
+     CGroup: /system.slice/mongod.service
+             └─44647 /usr/bin/mongod --config /etc/mongod.conf
+```
+
+If you get an error with `status=14`, try enabling read permissions and re-trying:
+```bash
+sudo chown -R mongodb:mongodb /var/lib/mongodb
+sudo chown -R mongodb:mongodb /var/log/mongodb
+sudo chown mongodb:mongodb /tmp/mongodb-27017.sock
+```
+
 
 3. To ensure both databases are running:
    ```bash
@@ -144,6 +165,8 @@ psql -d hookcatcher -f ./src/db_connections/postgres/schema.sql
 
 #### Mongo
 No manual setup is needed for MongoDB. Unlike PostgreSQL, MongoDB creates databases and collections automatically on first write. As long as mongod is running, the app will auto-create the hookcatcher database and request_payloads collection when the first webhook is captured. 
+
+
 
 ### Backend Structure
 

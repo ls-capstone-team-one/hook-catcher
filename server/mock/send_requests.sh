@@ -20,3 +20,7 @@ for ((i = 0; i < LENGTH; i++)); do
 
   echo ""
 done
+
+# Check to see if it worked:
+curl "http://$BASE_URL/api/bins/$BIN_ID" | jq > ./temp.json
+echo "See temp.json for output."
