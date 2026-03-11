@@ -46,6 +46,15 @@ Connection files for both databases are in `src/db_connections`, each in their c
       cp .env.example .env
    ```
 
+If you're not sure what username and password to use:
+```bash
+# get your username
+psql -c "SELECT current_user;"
+
+# set a new password (be sure to write it down!)
+psql -c "ALTER USER <username> PASSWORD '<new_passowrd>';"
+```
+
 #### Running databases locally
 
 Background info:
