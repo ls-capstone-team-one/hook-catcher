@@ -20,6 +20,9 @@ export function BinList({ bins }: BinListProps) {
             <ul className="space-y-3">
               {bins.map((bin) => {
                 const inspectUrl = `/bins/${bin.id}`;
+                const fullInspectUrl = `http://localhost:5173${inspectUrl}`;
+                const createdDate = bin.created_at.toLocaleDateString();
+                const expiresDate = bin.expires_at.toLocaleDateString();
 
                 return (
                   <li
@@ -27,8 +30,30 @@ export function BinList({ bins }: BinListProps) {
                     className="rounded-xl border bg-background px-4 py-3"
                   >
                     <p className="font-medium">{bin.id}</p>
-                    <p className="text-sm text-muted-foreground">
-                      <Link to={inspectUrl}>{inspectUrl}</Link>
+                    <p className="mt-2 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-muted-foreground">
+                      <span>
+                        <span className="font-semibold text-foreground">
+                          Created:
+                        </span>{" "}
+                        {createdDate}
+                      </span>
+                      <span>
+                        <span className="font-semibold text-foreground">
+                          Invalidates:
+                        </span>{" "}
+                        {expiresDate}
+                      </span>
+                      <span>
+                        <span className="font-semibold text-foreground">
+                          View at:
+                        </span>{" "}
+                        <Link
+                          to={inspectUrl}
+                          className="font-medium text-primary underline underline-offset-4 transition-colors hover:text-primary/80"
+                        >
+                          {fullInspectUrl}
+                        </Link>
+                      </span>
                     </p>
                   </li>
                 );
