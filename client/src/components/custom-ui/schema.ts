@@ -2,7 +2,7 @@ import { z } from "zod";
 
 const NANOID_ID_PATTERN = /^[A-Za-z0-9_-]{10}$/;
 const SEND_URL_PATTERN = /^\/[A-Za-z0-9_-]{10}$/;
-const INSPECT_URL_PATTERN = /^\/web\/bins\/[A-Za-z0-9_-]{10}$/;
+const INSPECT_URL_PATTERN = /^\/bins\/[A-Za-z0-9_-]{10}$/;
 
 export const PersistedBinSchema = z.object({
   id: z.string().refine((value) => NANOID_ID_PATTERN.test(value), {

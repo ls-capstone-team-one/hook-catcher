@@ -23,6 +23,7 @@ export function Home() {
     try {
       const response = await fetch(CREATE_BIN_ENDPOINT, { method: "POST" });
       if (!response.ok) {
+        console.log(response);
         throw new Error("Create bin request failed");
       }
 
