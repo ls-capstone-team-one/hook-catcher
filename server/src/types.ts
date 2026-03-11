@@ -29,3 +29,8 @@ export interface RequestDocument {
   bin_id: string;
   received_at: Date;
 }
+
+export interface BinWithRequestDocuments {
+  bin: Bin;
+  requests: RequestDocument[];
+}

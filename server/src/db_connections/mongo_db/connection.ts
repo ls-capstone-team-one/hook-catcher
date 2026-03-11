@@ -8,10 +8,10 @@ const defaultConfig: MongoClientOptions = {
   retryWrites: true,
 };
 
-const defaultUri: string =
-  process.env.MONGO_URI ?? "mongodb://localhost:27017";
+const defaultUri: string = process.env.MONGO_URI ?? "mongodb://localhost:27017";
 
-const databaseName: string = process.env.MONGO_DB_NAME ?? "hookcatcher";
+const MONGO_DB_NAME = process.env.MONGO_DB_NAME ?? "hookcatcher";
+const MONGO_COLLECTION_NAME = "request_payloads";
 
 let client: MongoClient | null = null;
 
@@ -23,7 +23,7 @@ let client: MongoClient | null = null;
  */
 async function connect(
   uri: string = defaultUri,
-  options: MongoClientOptions = {}
+  options: MongoClientOptions = {},
 ): Promise<MongoClient> {
   if (client) {
     console.warn("Already connected to the database.");
@@ -63,4 +63,4 @@ async function disconnect(): Promise<void> {
   }
 }
 
-export default { connect, disconnect };
+export default { connect, disconnect, MONGO_COLLECTION_NAME, MONGO_DB_NAME };
