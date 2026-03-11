@@ -1,11 +1,9 @@
 import { IncomingHttpHeaders } from "http";
 
-
 export interface Bin {
   id: string;
   created_at: Date;
   expires_at: Date;
-  request_count: number;
 }
 
 export interface BinResponse {
@@ -30,4 +28,9 @@ export interface RequestDocument {
   body: Record<string, any>;
   bin_id: string;
   received_at: Date;
+}
+
+export interface BinWithRequestDocuments {
+  bin: Bin;
+  requests: RequestDocument[];
 }

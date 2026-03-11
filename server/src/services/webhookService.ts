@@ -1,6 +1,9 @@
 import { IncomingHttpHeaders } from "http";
-import { findBinById } from "../db_connections/binRepo"
-import { createRequestDocument, createRequestRecord } from "../db_connections/webhookRepo";
+import { findBinById } from "../db_connections/binRepo";
+import {
+  createRequestDocument,
+  createRequestRecord,
+} from "../db_connections/webhookRepo";
 import { RequestDocument, RequestRecord } from "../types";
 
 export async function captureRequest(
@@ -10,17 +13,16 @@ export async function captureRequest(
   headers: IncomingHttpHeaders,
   body: any,
 ): Promise<RequestRecord> {
-
   // 1. Validate bin exists
   const bin = await findBinById(binId);
 
   if (!bin) {
-    throw new Error("Bin not found");
+    throw new Error("Bin not found.");
   }
 
   // 2. Check if bin has expired
   if (bin.expires_at < new Date()) {
-    throw new Error("Bin has expired");
+    throw new Error("Bin has expired.");
   }
 
   // 3. Capture a single timestamp for consistency across both databases
@@ -29,25 +31,23 @@ export async function captureRequest(
   // 4. Store full payload in MongoDB first
   const document: RequestDocument = {
     bin_id: binId,
-    method, 
-    path, 
-    headers, 
-    body, 
-    received_at, 
-  }
+    method,
+    path,
+    headers,
+    body,
+    received_at,
+  };
 
   const mongoId: string = await createRequestDocument(document);
 
-  // 5. Store metadata + MongoDB pointer in Postgres 
+  // 5. Store metadata + MongoDB pointer in Postgres
   const requestRecord = await createRequestRecord(
     binId,
     mongoId,
     method,
     path,
-    received_at
+    received_at,
   );
 
   return requestRecord;
 }
-
-
