@@ -5,10 +5,13 @@ import {
   CardFooter,
   CardHeader,
 } from "@/components/ui/card";
-import type { Bin } from "./schema";
+import { env } from "@/config/env";
+import { Link } from "react-router-dom";
+import CopyButton from "./button-copy";
+import type { PersistedBin } from "./schema";
 
 export type CreateBinResult =
-  | { status: "success"; bin: Bin }
+  | { status: "success"; bin: PersistedBin }
   | { status: "error" };
 
 type CreateBinResultModalProps = {
@@ -25,7 +28,11 @@ export function CreateBinResultModal({
   }
 
   const isSuccess = result.status === "success";
+  const binId = isSuccess ? result.bin.id : null;
   const title = isSuccess ? "Created" : "Failed to Create Bin";
+  const sendUrl = binId ? `/${binId}` : null;
+  const inspectUrl = binId ? `/bins/${binId}` : null;
+  const fullSendUrl = sendUrl ? `${env.APP_URL}${sendUrl}` : null;
 
   return (
     <div
@@ -64,9 +71,15 @@ export function CreateBinResultModal({
             <>
               <p>Bin "{result.bin.id}" is successfully created!</p>
               <p>
-                Your token is:{" "}
-                <span className="rounded-sm bg-amber-200 px-1 text-black">
-                  {result.bin.id}
+                Your API URL is:{" "}
+                <span className="inline-flex items-center gap-1 rounded-sm bg-amber-200 px-1 text-black">
+                  <span>{fullSendUrl}</span>
+                  {fullSendUrl && (
+                    <CopyButton
+                      content={fullSendUrl}
+                      className="h-7 w-7 text-black hover:bg-black/10"
+                    />
+                  )}
                 </span>
               </p>
             </>
@@ -81,7 +94,7 @@ export function CreateBinResultModal({
           </Button>
           {isSuccess && (
             <Button type="button" asChild>
-              <a href={result.bin.inspectUrl}>Open Bin</a>
+              <Link to={inspectUrl ?? "/"}>Open Bin</Link>
             </Button>
           )}
         </CardFooter>

@@ -10,7 +10,6 @@ export const PersistedBinSchema = z.object({
   }),
   created_at: z.coerce.date(),
   expires_at: z.coerce.date(),
-  request_count: z.number().int().nonnegative(),
 });
 
 export const BinSchema = PersistedBinSchema.extend({
@@ -18,10 +17,11 @@ export const BinSchema = PersistedBinSchema.extend({
     message: "sendUrl must match /{id}",
   }),
   inspectUrl: z.string().refine((value) => INSPECT_URL_PATTERN.test(value), {
-    message: "inspectUrl must match /web/bins/{id}",
+    message: "inspectUrl must match /bins/{id}",
   }),
 });
 
+export const PersistedBinsSchema = z.array(PersistedBinSchema);
 export const BinsSchema = z.array(BinSchema);
 
 export const BinApiResponseSchema = z.object({
@@ -30,12 +30,14 @@ export const BinApiResponseSchema = z.object({
     message: "sendUrl must match /{id}",
   }),
   inspectUrl: z.string().refine((value) => INSPECT_URL_PATTERN.test(value), {
-    message: "inspectUrl must match /web/bins/{id}",
+    message: "inspectUrl must match /bins/{id}",
   }),
 });
 
 export type Bin = z.infer<typeof BinSchema>;
 export type Bins = z.infer<typeof BinsSchema>;
+export type PersistedBin = z.infer<typeof PersistedBinSchema>;
+export type PersistedBins = z.infer<typeof PersistedBinsSchema>;
 export type BinApiResponse = z.infer<typeof BinApiResponseSchema>;
 
 export function toBin(response: BinApiResponse): Bin {

@@ -19,6 +19,7 @@ export default function CopyButton({
       variant="ghost"
       size="icon"
       aria-label="Copy to clipboard"
+      title="Copy to clipboard"
       className={cn("hover:filter-[invert(20%)]", className)}
       onClick={() => navigator.clipboard.writeText(content)}
     >
