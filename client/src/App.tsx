@@ -3,6 +3,7 @@ import {
   Routes, Route
 } from 'react-router-dom';
 import { Home } from './components/custom-ui/Home';
+import BinView from './components/custom-ui/request-details';
 
 
 function App() {
@@ -16,7 +17,7 @@ function App() {
         {/* Home page: will include NewBinCreator, BinList, SuccessModal, FailureModal */}
         <Route path='/' element={<Home />} />
         {/* Bin page: will include bin info and request list */}
-        {/* <Route path='/bins/:id' element={<Bin /> } /> */}
+        <Route path='/bins/:id' element={<BinView /> } />
       </Routes>
     </ Router>
   )
