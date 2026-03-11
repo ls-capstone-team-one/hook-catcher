@@ -16,7 +16,7 @@ function App() {
         {/* Home page: will include NewBinCreator, BinList, SuccessModal, FailureModal */}
         <Route path='/' element={<Home />} />
         {/* Bin page: will include bin info and request list */}
-        {/* <Route path='/web/:id' element={<Bin /> } /> */}
+        {/* <Route path='/bins/:id' element={<Bin /> } /> */}
       </Routes>
     </ Router>
   )

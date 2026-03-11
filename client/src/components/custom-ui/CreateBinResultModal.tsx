@@ -5,6 +5,7 @@ import {
   CardFooter,
   CardHeader,
 } from "@/components/ui/card";
+import { Link } from "react-router-dom";
 import type { Bin } from "./schema";
 
 export type CreateBinResult =
@@ -64,9 +65,9 @@ export function CreateBinResultModal({
             <>
               <p>Bin "{result.bin.id}" is successfully created!</p>
               <p>
-                Your token is:{" "}
+                Your API path is:{" "}
                 <span className="rounded-sm bg-amber-200 px-1 text-black">
-                  {result.bin.id}
+                  {result.bin.sendUrl}
                 </span>
               </p>
             </>
@@ -81,7 +82,8 @@ export function CreateBinResultModal({
           </Button>
           {isSuccess && (
             <Button type="button" asChild>
-              <a href={result.bin.inspectUrl}>Open Bin</a>
+              {/* <a href={result.bin.inspectUrl}>Open Bin</a> */}
+              <Link to={result.bin.inspectUrl}>Open Bin</Link>
             </Button>
           )}
         </CardFooter>

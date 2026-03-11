@@ -22,19 +22,18 @@ export function Home() {
   const onCreateBin = async () => {
     try {
       const response = await fetch(CREATE_BIN_ENDPOINT, { method: "POST" });
+
       if (!response.ok) {
-        console.log(response);
         throw new Error("Create bin request failed");
       }
 
       const data = await response.json();
-      console.log(data);
       const createBinResponse = BinApiResponseSchema.parse(data);
       const createdBin = toBin(createBinResponse);
 
       setBins((currentBins) => [...currentBins, createdBin]);
       setCreateResult({ status: "success", bin: createdBin });
-    } catch {
+    } catch (err) {
       setCreateResult({ status: "error" });
     }
   };
