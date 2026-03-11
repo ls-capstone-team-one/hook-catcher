@@ -31,5 +31,12 @@
       "action": "opened",
       "pull_request": { "number": 7, "title": "Add feature" }
     }
+  },
+  {
+    "method": "PATCH",
+    "body": {
+      "id": 42,
+      "status": "closed"
+    }
   }
 ]
