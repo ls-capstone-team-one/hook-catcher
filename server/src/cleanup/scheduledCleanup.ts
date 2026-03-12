@@ -1,6 +1,6 @@
 import { cleanupExpiredBins } from "../services/binService";
 
-const ONE_HOUR_INTERVAL: number = 5000;
+const ONE_HOUR_INTERVAL: number = 60 * 60 * 1000;
 
 export function startScheduledCleanup(): NodeJS.Timeout {
   const cleanup = (): void => {
