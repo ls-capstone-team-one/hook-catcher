@@ -36,12 +36,11 @@ import * as binService from "./fetch_bins.js"
 import { useEffect, useState } from "react"
 
 export default function BinView() {
-  const [bin, setBin] = useState({})
+  const [bin, setBin] = useState({} as any)
 
-  binService.getAllBins()
   const { id } = useParams()
 
-  async function getBin(id) {
+  async function getBin(id: any) {
     setBin(await binService.getBin(id))
   }
 
@@ -55,41 +54,42 @@ export default function BinView() {
       <NavBar>
         <BasketEditButtonBar />
       </NavBar>
-      <BasketInfoHeader />
-      <RequestList />
+      <BasketInfoHeader bin={bin} />
+      <RequestList requests={bin.requests} />
     </div>
   )
 }
 
-function BasketInfoHeader() {
+function BasketInfoHeader({ bin }: { bin: any }) {
   const placeholder = {
     id: "48wje34",
     count: 42,
   }
-  const basketUrl = env.APP_URL + "/" + placeholder.id
+  const basketUrl = env.APP_URL + "/" + bin.bin!.id
+  console.log(bin)
 
   return (
     <section className="mx-auto max-w-4xl p-3">
-      <h1 className="text-2xl font-bold">Basket: {placeholder.id}</h1>
+      <h1 className="text-2xl font-bold">Basket: {bin.bin.id}</h1>
       <p>
         Bin URL: {basketUrl} <CopyButton content={basketUrl} />
       </p>
-      <p>Request Count: {placeholder.count}</p>
+      <p>Request Count: {bin.requests.length}</p>
     </section>
   )
 }
 
-function RequestList() {
+function RequestList({ requests }: { requests: any }) {
   return (
     <section className="mx-auto grid max-w-4xl grid-cols-[repeat(auto-fill,minmax(28rem,1fr))] items-start">
-      {Array.from({ length: 11 }, (_, i) => (
-        <RequestDetails key={i} />
-      ))}
+      {requests.map((req: any) => {
+        return <RequestDetails key={req._id} request={req} />
+      })}
     </section>
   )
 }
 
-function RequestDetails() {
+function RequestDetails({ request }) {
   return (
     <section>
       <Card className="m-4 max-w-md">

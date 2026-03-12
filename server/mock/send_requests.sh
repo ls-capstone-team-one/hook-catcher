@@ -1,5 +1,5 @@
 BASE_URL="localhost:3000"
-BIN_ID="DqWsvYecTV"
+BIN_ID="xEGvLuV820"
 
 FULL_URL="http://$BASE_URL/$BIN_ID"
 REQUESTS_FILE="./mock_requests.json"
