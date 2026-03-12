@@ -27,11 +27,10 @@ export default function NavBar({ children }: { children: ReactNode }) {
                 HooksCatcher
               </NavigationMenuLink>
             </NavigationMenuItem>
-            <BasketsMenuList />
           </NavigationMenuList>
-
         </div>
-        <div>
+        <div className="flex items-center gap-2">
+          <BasketsMenuList />
           {children}
         </div>
       </NavigationMenu>
@@ -58,27 +57,29 @@ function BasketsMenuList() {
     },
   ]
   return (
-    <NavigationMenuItem className="flex">
-      <NavigationMenuTrigger
-        onPointerMove={(e) => e.preventDefault()}
-        onPointerLeave={(e) => e.preventDefault()}
-      >
-        Baskets
-      </NavigationMenuTrigger>
-      <NavigationMenuContent>
-        <ul className="grid w-50 gap-2">
-          {placeholder.map((component) => (
-            <MenuListItem
-              key={component.title}
-              title={component.title}
-              href={component.href}
-            >
-              {component.count} requests
-            </MenuListItem>
-          ))}
-        </ul>
-      </NavigationMenuContent>
-    </NavigationMenuItem>
+    <NavigationMenuList>
+      <NavigationMenuItem className="flex">
+        <NavigationMenuTrigger
+          onPointerMove={(e) => e.preventDefault()}
+          onPointerLeave={(e) => e.preventDefault()}
+        >
+          Baskets
+        </NavigationMenuTrigger>
+        <NavigationMenuContent>
+          <ul className="grid w-50 gap-2">
+            {placeholder.map((component) => (
+              <MenuListItem
+                key={component.title}
+                title={component.title}
+                href={component.href}
+              >
+                {component.count} requests
+              </MenuListItem>
+            ))}
+          </ul>
+        </NavigationMenuContent>
+      </NavigationMenuItem>
+    </NavigationMenuList>
   )
 }
 
