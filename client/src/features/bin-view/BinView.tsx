@@ -23,7 +23,7 @@ import {
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu"
 
-import NavBar from "@/components/custom-ui/nav-bar"
+import NavBar from "@/components/custom-ui/NavBar.tsx"
 import CopyButton from "@/components/custom-ui/button-copy"
 import { Button } from "@/components/ui/button"
 import { ButtonGroup } from "@/components/ui/button-group"
