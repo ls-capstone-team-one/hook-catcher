@@ -178,7 +178,7 @@ function RequestHeadersAndBody({ request }: { request: RequestDocument }) {
       <AccordionItem value="item-2">
         <AccordionTrigger>Body</AccordionTrigger>
         <AccordionContent>
-          <SimpleCodeBlock content={request.body} />
+          <SimpleCodeBlock content={JSON.stringify(JSON.parse(request.body), null, 2)} />
         </AccordionContent>
       </AccordionItem>
     </Accordion>
@@ -199,7 +199,7 @@ function SimpleCodeBlock({
   return (
     <Item className="bg-secondary">
       <ItemContent>
-        {content && <p>{content}</p>}
+        {content && <pre>{content}</pre>}
         {children}
       </ItemContent>
       {copyButtonVisible && content && <CopyButton content={content} />}
