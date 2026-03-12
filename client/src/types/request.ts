@@ -2,6 +2,7 @@ import { z } from "zod";
 import { PersistedBinSchema } from "@/components/custom-ui/schema";
 
 export const RequestDocumentSchema = z.object({
+  _id: z.string(),
   method: z.string(),
   path: z.string(),
   headers: z.record(z.string(), z.unknown()),

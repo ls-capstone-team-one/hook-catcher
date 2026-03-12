@@ -60,8 +60,7 @@ export default function BinView() {
   )
 }
 
-function BasketInfoHeader({ bin }: { bin: any }) {
-
+function BasketInfoHeader({ bin }: { bin: BinWithRequests | null }) {
   const basketUrl = env.APP_URL + "/" + (bin && bin.bin.id)
   console.log(bin)
 
@@ -79,19 +78,20 @@ function BasketInfoHeader({ bin }: { bin: any }) {
 function RequestList({ requests }: { requests: RequestDocument[] }) {
   return (
     <section className="mx-auto grid max-w-4xl grid-cols-[repeat(auto-fill,minmax(28rem,1fr))] items-start">
-      {requests && requests.map((req: RequestDocument) => {
-        return <RequestDetails key={req.received_at} request={req} />
-      })}
+      {requests &&
+        requests.map((req: RequestDocument) => {
+          return <RequestDetails key={req._id} request={req} />
+        })}
     </section>
   )
 }
 
-function RequestDetails({ request }) {
+function RequestDetails({ request }: { request: RequestDocument }) {
   return (
     <section>
       <Card className="m-4 max-w-md">
         <CardHeader>
-          <CardTitle>POST</CardTitle>
+          <CardTitle>{request.method}</CardTitle>
           <TimeStamp />
           <DateStamp />
         </CardHeader>
