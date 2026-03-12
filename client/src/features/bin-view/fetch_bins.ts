@@ -1,14 +1,15 @@
 import { env } from "@/config/env"
+import { PersistedBinsSchema } from "@/components/custom-ui/schema"
+import { BinWithRequestsSchema } from "@/types/request"
 
 export async function getAllBins() {
   const response = await fetch(`${env.API_URL}/api/bins`)
   const data = await response.json()
-  console.log(data)
-  return data
+  return PersistedBinsSchema.parse(data)
 }
 
-export async function getBin(id) {
+export async function getBin(id: string) {
   const response = await fetch(`${env.API_URL}/api/bins/${id}`)
   const data = await response.json()
-  return data
+  return BinWithRequestsSchema.parse(data)
 }

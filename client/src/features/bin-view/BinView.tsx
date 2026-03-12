@@ -32,58 +32,55 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
 import { useParams } from "react-router"
 import { env } from "@/config/env"
-import * as binService from "./fetch_bins.js"
+import * as binService from "./fetch_bins.ts"
 import { useEffect, useState } from "react"
+import type { BinWithRequests, RequestDocument } from "@/types/request.ts"
 
 export default function BinView() {
-  const [bin, setBin] = useState({} as any)
+  const [bin, setBin] = useState<BinWithRequests | null>(null)
 
   const { id } = useParams()
 
-  async function getBin(id: any) {
+  async function getBin(id: string) {
     setBin(await binService.getBin(id))
   }
 
   useEffect(() => {
-    getBin(id)
+    id && getBin(id)
   }, [])
 
   return (
     <div>
-      <p>{JSON.stringify(bin)}</p>
       <NavBar>
         <BasketEditButtonBar />
       </NavBar>
       <BasketInfoHeader bin={bin} />
-      <RequestList requests={bin.requests} />
+      <RequestList requests={bin && bin.requests} />
     </div>
   )
 }
 
 function BasketInfoHeader({ bin }: { bin: any }) {
-  const placeholder = {
-    id: "48wje34",
-    count: 42,
-  }
-  const basketUrl = env.APP_URL + "/" + bin.bin!.id
+
+  const basketUrl = env.APP_URL + "/" + (bin && bin.bin.id)
   console.log(bin)
 
   return (
     <section className="mx-auto max-w-4xl p-3">
-      <h1 className="text-2xl font-bold">Basket: {bin.bin.id}</h1>
+      <h1 className="text-2xl font-bold">Basket: {bin && bin.bin.id}</h1>
       <p>
         Bin URL: {basketUrl} <CopyButton content={basketUrl} />
       </p>
-      <p>Request Count: {bin.requests.length}</p>
+      <p>Request Count: {bin && bin.requests.length}</p>
     </section>
   )
 }
 
-function RequestList({ requests }: { requests: any }) {
+function RequestList({ requests }: { requests: RequestDocument[] }) {
   return (
     <section className="mx-auto grid max-w-4xl grid-cols-[repeat(auto-fill,minmax(28rem,1fr))] items-start">
-      {requests.map((req: any) => {
-        return <RequestDetails key={req._id} request={req} />
+      {requests && requests.map((req: RequestDocument) => {
+        return <RequestDetails key={req.received_at} request={req} />
       })}
     </section>
   )
