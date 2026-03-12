@@ -1,3 +1,7 @@
+
+# Copy this file and use it to do manual tests on your dev machine
+# You should probably avoid checking your copy into version control.
+###
 GET http://localhost:3000/api/health
 
 ###
@@ -6,5 +10,6 @@ POST http://localhost:3000/api/bins
 ###
 GET http://localhost:3000/api/bins
 
+# Customize this request with the actual bin id
 ###
 DELETE  http://localhost:3000/api/bins/cwpigojFnC

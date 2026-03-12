@@ -11,9 +11,9 @@ router.all("/:binId", async (req: Request, res: Response) => {
     const headers = req.headers;
     const body = req.body;
 
-    await captureRequest(binId, method, path, headers, body);
+    const capturedRequest = await captureRequest(binId, method, path, headers, body);
 
-    res.status(200).json({ message: "Request captured." });
+    res.status(200).json({ message: "Request captured", request: capturedRequest });
   } catch (error) {
     if (error instanceof Error) {
       if (error.message === "Bin not found") {

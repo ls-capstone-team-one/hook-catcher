@@ -34,3 +34,8 @@ export interface BinWithRequestDocuments {
   bin: Bin;
   requests: RequestDocument[];
 }
+
+export interface BroadcastRequest {
+  type: string;
+  payload: RequestDocument;
+}
