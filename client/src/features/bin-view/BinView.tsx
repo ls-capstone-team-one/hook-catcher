@@ -3,7 +3,7 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion"
+} from "@/components/ui/accordion";
 
 import {
   Clock,
@@ -30,7 +30,7 @@ import {
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
-} from "@/components/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu";
 
 import NavBar from "@/components/custom-ui/NavBar.tsx"
 import CopyButton from "@/components/custom-ui/Button_Copy.tsx"
@@ -46,6 +46,7 @@ import * as binService from "./fetch_bins.ts"
 import { useEffect, useState } from "react"
 import type { BinWithRequests, RequestDocument } from "@/types/request.ts"
 import { toast } from "sonner"
+import useBinWebSocket from "@/hooks/useBinWebSocket.ts";
 
 export default function BinView() {
   const [bin, setBin] = useState<BinWithRequests | null>(null)
@@ -72,8 +73,38 @@ export default function BinView() {
   }
 
   useEffect(() => {
-    id && getBin(id)
-  }, [])
+    if (!id) return;
+
+    let isSubscribed = true;
+
+    async function loadBin() {
+      const nextBin = await binService.getBin(id as string)
+
+      if (isSubscribed) {
+        setBin(nextBin);
+      }
+    }
+
+    loadBin();
+
+    return () => {
+      isSubscribed = false;
+    }
+  }, [id])
+
+  useBinWebSocket({
+    binId: id,
+    onNewRequest: (request) => {
+      setBin((currentBin) => {
+        if (!currentBin) return currentBin;
+
+        return {
+          ...currentBin,
+          requests: [request, ...currentBin.requests],
+        };
+      });
+    },
+  })
 
   return (
     <div>
@@ -90,7 +121,7 @@ export default function BinView() {
         <RequestList requests={bin && bin.requests} />
       )}
     </div>
-  )
+  );
 }
 
 function BasketInfoHeader({ bin }: { bin: BinWithRequests | null }) {
@@ -100,11 +131,12 @@ function BasketInfoHeader({ bin }: { bin: BinWithRequests | null }) {
     <section className="mx-auto max-w-4xl p-3">
       <h1 className="text-2xl font-bold">Basket: {bin && bin.bin.id}</h1>
       <p>
-        Bin URL: {basketUrl} <CopyButton content={basketUrl} />
+        Bin URL: {basketUrl}
+        {basketUrl && <CopyButton content={basketUrl} />}
       </p>
       <p>Request Count: {bin && bin.requests.length}</p>
     </section>
-  )
+  );
 }
 
 function RequestList({ requests }: { requests: RequestDocument[] | null }) {
@@ -118,7 +150,7 @@ function RequestList({ requests }: { requests: RequestDocument[] | null }) {
           return <RequestDetails key={req._id} request={req} />
         })}
     </section>
-  )
+  );
 }
 
 function EmptyRequestList() {
@@ -157,14 +189,14 @@ function RequestDetails({ request }: { request: RequestDocument }) {
         </CardContent>
       </Card>
     </section>
-  )
+  );
 }
 
 function RequestHeadersAndBody({ request }: { request: RequestDocument }) {
   const readableHeaders = Object.entries(request.headers).map((entry) => {
     const [header, value] = entry
     return <div className="m-0" key={header}>{`${header}: ${value}`}</div>
-  })
+  });
 
   return (
     <Accordion type="single" collapsible defaultValue="item-1">
@@ -183,7 +215,7 @@ function RequestHeadersAndBody({ request }: { request: RequestDocument }) {
         </AccordionContent>
       </AccordionItem>
     </Accordion>
-  )
+  );
 }
 
 type SimpleCodeBlockProps = {
@@ -204,7 +236,7 @@ function SimpleCodeBlock({
         {children}
       </ItemContent>
       {copyButtonVisible && (content || children) && (
-        <CopyButton content={content} />
+        <CopyButton content={content || null} />
       )}
     </Item>
   )

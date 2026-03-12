@@ -1,9 +1,14 @@
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
-import { env } from "@/config/env"
-import { Link } from "react-router-dom"
-import CopyButton from "./Button_Copy"
-import type { PersistedBin } from "./schema"
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+} from "@/components/ui/card";
+import { backendOrigin } from "@/config/env";
+import { Link } from "react-router-dom";
+import CopyButton from "./Button_Copy";
+import type { PersistedBin } from "./schema";
 
 export type CreateBinResult =
   | { status: "success"; bin: PersistedBin }
@@ -22,12 +27,12 @@ export function CreateBinResultModal({
     return null
   }
 
-  const isSuccess = result.status === "success"
-  const binId = isSuccess ? result.bin.id : null
-  const title = isSuccess ? "Created" : "Failed to Create Bin"
-  const sendUrl = binId ? `/${binId}` : null
-  const inspectUrl = binId ? `/bins/${binId}` : null
-  const fullSendUrl = sendUrl ? `${env.APP_URL}${sendUrl}` : null
+  const isSuccess = result.status === "success";
+  const binId = isSuccess ? result.bin.id : null;
+  const title = isSuccess ? "Created" : "Failed to Create Bin";
+  const sendUrl = binId ? `/${binId}` : null;
+  const inspectUrl = binId ? `/bins/${binId}` : null;
+  const fullSendUrl = sendUrl ? `${backendOrigin}${sendUrl}` : null;
 
   return (
     <div

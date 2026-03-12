@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { env } from "@/config/env";
 import { NewBinCreator } from "./NewBinCreator";
 import { CreateBinResultModal } from "./CreateBinResultModal";
 import type { CreateBinResult } from "./CreateBinResultModal";
@@ -10,9 +11,7 @@ import {
   type PersistedBin,
 } from "./schema";
 
-
-const BASE_URL = "http://localhost:3000";
-const BINS_API_ENDPOINT = `${BASE_URL}/api/bins`;
+const BINS_API_ENDPOINT = `${env.API_URL}/api/bins`;
 
 export function Home() {
   const [bins, setBins] = useState<PersistedBin[]>([]);
