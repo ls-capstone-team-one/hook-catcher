@@ -124,7 +124,7 @@ function RequestList({ requests }: { requests: RequestDocument[] | null }) {
 
 function EmptyRequestList() {
   return (
-    <div className="flex items-center h-full">
+    <div className="flex items-center h-full min-h-150">
       <Empty>
         <EmptyHeader>
           <EmptyMedia variant="icon">
