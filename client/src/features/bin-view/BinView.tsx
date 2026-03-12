@@ -86,7 +86,7 @@ export default function BinView() {
       </NavBar>
       <BasketInfoHeader bin={bin} />
       {loading ? (
-        <Spinner className="mx-auto size-14" />
+        <Spinner className="mx-auto size-14 min-h-150" />
       ) : (
         <RequestList requests={bin && bin.requests} />
       )}
