@@ -1,18 +1,17 @@
-import InvertoCat from "@/src/assets/GitHub_Invertocat_Black.svg";  
-
+import InvertoCat from "@/src/assets/GitHub_Invertocat_Black.svg"
 
 type LinkParams = {
-  url: string;
-  alt_text: string;
+  url: string
+  altText?: string
 }
 
 export default function GHInvertoCat({
   url,
-  alt_text="Github Logo.  Click to visit the project repo"
+  altText = "GitHub logo",
 }: LinkParams) {
   return (
-    <a href={url}>
-      <img src={InvertoCat} alt={alt_text} />
+    <a href={url} aria-label="Visit the GitHub repository">
+      <img src={InvertoCat} alt={altText} />
     </a>
   )
 }
