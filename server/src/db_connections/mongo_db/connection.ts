@@ -26,7 +26,7 @@ async function connect(
   options: MongoClientOptions = {},
 ): Promise<MongoClient> {
   if (client) {
-    console.warn("Already connected to the database.");
+    console.warn("Already connected to the MongoDB database.");
     return client;
   }
 
