@@ -3,6 +3,7 @@ import { NewBinCreator } from "./NewBinCreator";
 import { CreateBinResultModal } from "./CreateBinResultModal";
 import type { CreateBinResult } from "./CreateBinResultModal";
 import { BinList } from "./BinList";
+import NavBar from "./NavBar";
 import {
   BinApiResponseSchema,
   PersistedBinsSchema,
@@ -60,6 +61,7 @@ export function Home() {
 
   return (
     <>
+      <NavBar />
       <NewBinCreator onCreateBin={onCreateBin} />
       <BinList bins={bins} />
       <CreateBinResultModal

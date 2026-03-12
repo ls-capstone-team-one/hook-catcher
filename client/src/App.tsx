@@ -19,7 +19,7 @@ function App() {
         </Routes>
       </Router>
       <GHInvertoCat  
-        className="fixed bottom-4 right-4 w-[40px]"
+        className="fixed bottom-4 right-4 w-10"
         url="https://github.com/ls-capstone-team-one/hook-catcher"
       />
     </>

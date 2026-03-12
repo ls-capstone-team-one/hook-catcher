@@ -11,7 +11,7 @@ import { useHideOnScrollDown } from "@/hooks/useHideOnScrollDown"
 import { type ReactNode } from "react"
 import { FishingHook } from "lucide-react"
 
-export default function NavBar({ children }: { children: ReactNode }) {
+export default function NavBar({ children }: { children?: ReactNode }) {
   const hidden = useHideOnScrollDown()
 
   return (
@@ -23,14 +23,14 @@ export default function NavBar({ children }: { children: ReactNode }) {
           <NavigationMenuList>
             <NavigationMenuItem>
               <NavigationMenuLink className="text-lg" href="/">
-                <FishingHook className="relative -left-[10px] scale-150" />
+                <FishingHook className="relative -left-2.5 scale-150" />
                 HooksCatcher
               </NavigationMenuLink>
             </NavigationMenuItem>
           </NavigationMenuList>
         </div>
         <div className="flex items-center gap-2">
-          <BasketsMenuList />
+          {/* <BasketsDropdown /> */}
           {children}
         </div>
       </NavigationMenu>
@@ -38,7 +38,7 @@ export default function NavBar({ children }: { children: ReactNode }) {
   )
 }
 
-function BasketsMenuList() {
+function BasketsDropdown() {
   const placeholder = [
     {
       title: "abc",
@@ -57,29 +57,31 @@ function BasketsMenuList() {
     },
   ]
   return (
-    <NavigationMenuList>
-      <NavigationMenuItem className="flex">
-        <NavigationMenuTrigger
-          onPointerMove={(e) => e.preventDefault()}
-          onPointerLeave={(e) => e.preventDefault()}
-        >
-          Baskets
-        </NavigationMenuTrigger>
-        <NavigationMenuContent>
-          <ul className="grid w-50 gap-2">
-            {placeholder.map((component) => (
-              <MenuListItem
-                key={component.title}
-                title={component.title}
-                href={component.href}
-              >
-                {component.count} requests
-              </MenuListItem>
-            ))}
-          </ul>
-        </NavigationMenuContent>
-      </NavigationMenuItem>
-    </NavigationMenuList>
+    <NavigationMenu >
+      <NavigationMenuList>
+        <NavigationMenuItem className="flex">
+          <NavigationMenuTrigger
+            onPointerMove={(e) => e.preventDefault()}
+            onPointerLeave={(e) => e.preventDefault()}
+          >
+            Baskets
+          </NavigationMenuTrigger>
+          <NavigationMenuContent>
+            <ul className="grid w-50 gap-2">
+              {placeholder.map((component) => (
+                <MenuListItem
+                  key={component.title}
+                  title={component.title}
+                  href={component.href}
+                >
+                  {component.count} requests
+                </MenuListItem>
+              ))}
+            </ul>
+          </NavigationMenuContent>
+        </NavigationMenuItem>
+      </NavigationMenuList>
+    </NavigationMenu>
   )
 }
 
