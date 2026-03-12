@@ -9,6 +9,7 @@ import {
 
 import { useHideOnScrollDown } from "@/hooks/useHideOnScrollDown"
 import { type ReactNode } from "react"
+import { FishingHook } from "lucide-react"
 
 export default function NavBar({ children }: { children: ReactNode }) {
   const hidden = useHideOnScrollDown()
@@ -38,7 +39,7 @@ export default function NavBar({ children }: { children: ReactNode }) {
           <NavigationMenuList>
             <NavigationMenuItem>
               <NavigationMenuLink className="text-lg" href="/">
-                RequestBin
+                HooksCatcher
               </NavigationMenuLink>
             </NavigationMenuItem>
             <NavigationMenuItem className="flex">
