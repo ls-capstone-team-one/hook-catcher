@@ -18,7 +18,6 @@ import {
 
 import {
   Empty,
-  EmptyContent,
   EmptyDescription,
   EmptyHeader,
   EmptyMedia,
@@ -204,7 +203,9 @@ function SimpleCodeBlock({
         {content && <pre>{content}</pre>}
         {children}
       </ItemContent>
-      {copyButtonVisible && (content || children) && <CopyButton content={content} />}
+      {copyButtonVisible && (content || children) && (
+        <CopyButton content={content} />
+      )}
     </Item>
   )
 }
