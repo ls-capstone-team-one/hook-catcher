@@ -18,5 +18,7 @@ export async function deleteBin(id: string) {
   const response = await fetch(`${env.API_URL}/api/bins/${id}`, {
     method: "DELETE",
   })
-  return response.status
+  if (!response.ok) {
+    throw new Error(`Deletion of basket ${id} was unsuccessful.`)
+  }
 }

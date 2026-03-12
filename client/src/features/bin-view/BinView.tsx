@@ -39,18 +39,16 @@ import type { BinWithRequests, RequestDocument } from "@/types/request.ts"
 export default function BinView() {
   const [bin, setBin] = useState<BinWithRequests | null>(null)
   const { id } = useParams()
-
-
+  const nav = useNavigate()
 
   async function getBin(id: string) {
     setBin(await binService.getBin(id))
   }
 
   async function deleteBin(id: string | null) {
-    if (id) {
-      const status = await binService.deleteBin(id);
-      console.log(status)
-    }
+    if (!id) return
+    await binService.deleteBin(id)
+    nav("/")
   }
 
   useEffect(() => {
@@ -196,12 +194,10 @@ function DateStamp({ received }: { received: Date }) {
 }
 
 type BasketEditProps = {
-  deleteBinCB: Function;
+  deleteBinCB: Function
 }
 
-function BasketEditButtonBar({
-  deleteBinCB,
-}: BasketEditProps) {
+function BasketEditButtonBar({ deleteBinCB }: BasketEditProps) {
   return (
     <ButtonGroup>
       <ButtonGroup className="flex">
