@@ -30,7 +30,7 @@ import { ButtonGroup } from "@/components/ui/button-group"
 import { Item, ItemContent, ItemMedia } from "@/components/ui/item"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
-import { useParams } from "react-router"
+import { useParams, useNavigate } from "react-router"
 import { env } from "@/config/env"
 import * as binService from "./fetch_bins.ts"
 import { useEffect, useState } from "react"
@@ -38,11 +38,19 @@ import type { BinWithRequests, RequestDocument } from "@/types/request.ts"
 
 export default function BinView() {
   const [bin, setBin] = useState<BinWithRequests | null>(null)
-
   const { id } = useParams()
+
+
 
   async function getBin(id: string) {
     setBin(await binService.getBin(id))
+  }
+
+  async function deleteBin(id: string | null) {
+    if (id) {
+      const status = await binService.deleteBin(id);
+      console.log(status)
+    }
   }
 
   useEffect(() => {
@@ -52,7 +60,7 @@ export default function BinView() {
   return (
     <div>
       <NavBar>
-        <BasketEditButtonBar />
+        <BasketEditButtonBar deleteBinCB={() => deleteBin(id)} />
       </NavBar>
       <BasketInfoHeader bin={bin} />
       <RequestList requests={bin && bin.requests} />
@@ -187,7 +195,13 @@ function DateStamp({ received }: { received: Date }) {
   )
 }
 
-function BasketEditButtonBar() {
+type BasketEditProps = {
+  deleteBinCB: Function;
+}
+
+function BasketEditButtonBar({
+  deleteBinCB,
+}: BasketEditProps) {
   return (
     <ButtonGroup>
       <ButtonGroup className="flex">
@@ -212,7 +226,7 @@ function BasketEditButtonBar() {
                 <Shredder />
                 Delete all requests
               </DropdownMenuItem>
-              <DropdownMenuItem>
+              <DropdownMenuItem onClick={() => deleteBinCB()}>
                 <Trash2 />
                 Destroy basket
               </DropdownMenuItem>
