@@ -34,7 +34,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 
 import NavBar from "@/components/custom-ui/NavBar.tsx"
-import CopyButton from "@/components/custom-ui/button-copy"
+import CopyButton from "@/components/custom-ui/Button_Copy.tsx"
 import { Button } from "@/components/ui/button"
 import { ButtonGroup } from "@/components/ui/button-group"
 import { Item, ItemContent, ItemMedia } from "@/components/ui/item"
@@ -111,7 +111,7 @@ function BasketInfoHeader({ bin }: { bin: BinWithRequests | null }) {
 function RequestList({ requests }: { requests: RequestDocument[] | null }) {
   if (!requests || requests.length === 0) return <EmptyRequestList />
   console.log(requests)
-  
+
   return (
     <section className="mx-auto grid max-w-4xl grid-cols-[repeat(auto-fill,minmax(28rem,1fr))] items-start">
       {requests &&
@@ -124,7 +124,7 @@ function RequestList({ requests }: { requests: RequestDocument[] | null }) {
 
 function EmptyRequestList() {
   return (
-    <div className="flex items-center h-full min-h-150">
+    <div className="flex h-full min-h-150 items-center">
       <Empty>
         <EmptyHeader>
           <EmptyMedia variant="icon">
@@ -178,7 +178,9 @@ function RequestHeadersAndBody({ request }: { request: RequestDocument }) {
       <AccordionItem value="item-2">
         <AccordionTrigger>Body</AccordionTrigger>
         <AccordionContent>
-          <SimpleCodeBlock content={JSON.stringify(JSON.parse(request.body), null, 2)} />
+          <SimpleCodeBlock
+            content={JSON.stringify(JSON.parse(request.body), null, 2)}
+          />
         </AccordionContent>
       </AccordionItem>
     </Accordion>
