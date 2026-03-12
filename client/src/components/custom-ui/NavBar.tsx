@@ -13,7 +13,34 @@ import { FishingHook } from "lucide-react"
 
 export default function NavBar({ children }: { children: ReactNode }) {
   const hidden = useHideOnScrollDown()
-  const components = [
+
+  return (
+    <div
+      className={`sticky top-0 z-50 w-full bg-secondary transition-transform duration-300 ${hidden ? "-translate-y-full" : "translate-y-0"}`}
+    >
+      <NavigationMenu className="mx-auto flex w-full max-w-4xl justify-between p-3 pb-1.5">
+        <div>
+          <NavigationMenuList>
+            <NavigationMenuItem>
+              <NavigationMenuLink className="text-lg" href="/">
+                <FishingHook className="relative -left-[10px] scale-150" />
+                HooksCatcher
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+            <BasketsMenuList />
+          </NavigationMenuList>
+
+        </div>
+        <div>
+          {children}
+        </div>
+      </NavigationMenu>
+    </div>
+  )
+}
+
+function BasketsMenuList() {
+  const placeholder = [
     {
       title: "abc",
       href: "abc",
@@ -31,51 +58,27 @@ export default function NavBar({ children }: { children: ReactNode }) {
     },
   ]
   return (
-    <div
-      className={`sticky top-0 z-50 w-full bg-secondary transition-transform duration-300 ${hidden ? "-translate-y-full" : "translate-y-0"}`}
-    >
-      <NavigationMenu className="mx-auto flex w-full max-w-4xl justify-between p-3 pb-1.5">
-        <div>
-          <NavigationMenuList>
-            <NavigationMenuItem>
-              <NavigationMenuLink className="text-lg" href="/">
-                HooksCatcher
-              </NavigationMenuLink>
-            </NavigationMenuItem>
-            <NavigationMenuItem className="flex">
-              <NavigationMenuTrigger
-                onPointerMove={(e) => e.preventDefault()}
-                onPointerLeave={(e) => e.preventDefault()}
-              >
-                Baskets
-              </NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <ul className="grid w-50 gap-2">
-                  {components.map((component) => (
-                    <MenuListItem
-                      key={component.title}
-                      title={component.title}
-                      href={component.href}
-                    >
-                      {component.count} requests
-                    </MenuListItem>
-                  ))}
-                </ul>
-              </NavigationMenuContent>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <NavigationMenuLink
-                className="text-subtle"
-                href="https://github.com/ls-capstone-team-one/hook-catcher"
-              >
-                GitHub
-              </NavigationMenuLink>
-            </NavigationMenuItem>
-          </NavigationMenuList>
-        </div>
-        <div>{children}</div>
-      </NavigationMenu>
-    </div>
+    <NavigationMenuItem className="flex">
+      <NavigationMenuTrigger
+        onPointerMove={(e) => e.preventDefault()}
+        onPointerLeave={(e) => e.preventDefault()}
+      >
+        Baskets
+      </NavigationMenuTrigger>
+      <NavigationMenuContent>
+        <ul className="grid w-50 gap-2">
+          {placeholder.map((component) => (
+            <MenuListItem
+              key={component.title}
+              title={component.title}
+              href={component.href}
+            >
+              {component.count} requests
+            </MenuListItem>
+          ))}
+        </ul>
+      </NavigationMenuContent>
+    </NavigationMenuItem>
   )
 }
 
