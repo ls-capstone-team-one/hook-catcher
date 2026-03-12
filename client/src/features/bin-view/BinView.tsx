@@ -5,10 +5,6 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion"
 
-import { Item, ItemContent, ItemMedia } from "@/components/ui/item"
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-
 import {
   Clock,
   CalendarDays,
@@ -19,13 +15,6 @@ import {
   Trash2,
 } from "lucide-react"
 
-import { env } from "@/config/env"
-import NavBar from "@/components/custom-ui/nav-bar"
-import CopyButton from "@/components/custom-ui/button-copy"
-import { Button } from "@/components/ui/button"
-import { ButtonGroup } from "@/components/ui/button-group"
-import * as binService from "./fetch_bins.js"
-
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -34,11 +23,35 @@ import {
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu"
 
+import NavBar from "@/components/custom-ui/nav-bar"
+import CopyButton from "@/components/custom-ui/button-copy"
+import { Button } from "@/components/ui/button"
+import { ButtonGroup } from "@/components/ui/button-group"
+import { Item, ItemContent, ItemMedia } from "@/components/ui/item"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+
+import { useParams } from "react-router"
+import { env } from "@/config/env"
+import * as binService from "./fetch_bins.js"
+import { useEffect, useState } from "react"
+
 export default function BinView() {
-  binService.getAllBins();
-  
+  const [bin, setBin] = useState({})
+
+  binService.getAllBins()
+  const { id } = useParams()
+
+  async function getBin(id) {
+    setBin(await binService.getBin(id))
+  }
+
+  useEffect(() => {
+    getBin(id)
+  }, [])
+
   return (
     <div>
+      <p>{JSON.stringify(bin)}</p>
       <NavBar>
         <BasketEditButtonBar />
       </NavBar>

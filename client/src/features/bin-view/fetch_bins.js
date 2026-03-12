@@ -7,3 +7,8 @@ export async function getAllBins() {
   return data
 }
 
+export async function getBin(id) {
+  const response = await fetch(`${env.API_URL}/api/bins/${id}`)
+  const data = await response.json()
+  return data
+}
