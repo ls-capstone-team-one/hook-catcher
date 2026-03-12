@@ -92,30 +92,38 @@ function RequestDetails({ request }: { request: RequestDocument }) {
       <Card className="m-4 max-w-md">
         <CardHeader>
           <CardTitle>{request.method}</CardTitle>
-          <TimeStamp />
-          <DateStamp />
+          <TimeStamp dateTime={request.received_at} />
+          <DateStamp received={request.received_at} />
         </CardHeader>
         <CardContent>
-          <RequestPath path="abc123" />
-          <RequestHeadersAndBody />
+          <RequestPath path={request.path} />
+          <RequestHeadersAndBody request={request} />
         </CardContent>
       </Card>
     </section>
   )
 }
 
-function RequestHeadersAndBody() {
+function RequestHeadersAndBody({ request }: { request: RequestDocument} ) {
   const codePlaceholder = `Accept: */* Connection: close Content-Length: 9 Content-Type:
             application/x-www-form-urlencoded User-Agent: curl/7.81.0 X-City:
             Durham X-Country: US X-Forwarded-For: 108.83.203.18 X-Real-Ip:
             108.83.203.18`
+
+  const readableHeaders = Object.entries(request.headers)
+    .map((entry) => {
+      const [header, value] = entry
+      return <div className="m-0" key={header}>{`${header}: ${value}`}</div>
+    })
 
   return (
     <Accordion type="single" collapsible defaultValue="item-1">
       <AccordionItem value="item-1">
         <AccordionTrigger>Headers</AccordionTrigger>
         <AccordionContent>
-          <SimpleCodeBlock content={codePlaceholder} />
+          <SimpleCodeBlock>
+            {readableHeaders}
+          </SimpleCodeBlock>
         </AccordionContent>
       </AccordionItem>
       <AccordionItem value="item-2">
@@ -129,7 +137,7 @@ function RequestHeadersAndBody() {
 }
 
 type SimpleCodeBlockProps = {
-  content: string
+  content?: string
   copyButtonVisible?: boolean
 }
 
@@ -140,7 +148,8 @@ function SimpleCodeBlock({
   return (
     <Item className="bg-secondary">
       <ItemContent>
-        <p>{content}</p>
+        {content ? <p>{content}</p>}
+        {children}
       </ItemContent>
       {copyButtonVisible && <CopyButton content={content} />}
     </Item>
@@ -151,34 +160,34 @@ function RequestPath({ path }: { path: string }) {
   return (
     <Item className="bg-primary text-primary-foreground">
       <ItemContent>
-        <p>/{path}</p>
+        <p>{path}</p>
       </ItemContent>
       <CopyButton content={path} />
     </Item>
   )
 }
 
-function TimeStamp() {
+function TimeStamp({ dateTime }: { dateTime: Date }) {
   return (
     <Item>
       <ItemMedia variant="icon">
         <Clock />
       </ItemMedia>
       <ItemContent>
-        <time>1:23 pm</time>
+        <time>{dateTime.toTimeString()}</time>
       </ItemContent>
     </Item>
   )
 }
 
-function DateStamp() {
+function DateStamp({ received }: { received: Date }) {
   return (
     <Item>
       <ItemMedia variant="icon">
         <CalendarDays />
       </ItemMedia>
       <ItemContent>
-        <time>2026-04-03</time>
+        <time>{received.toDateString()}</time>
       </ItemContent>
     </Item>
   )
