@@ -172,7 +172,7 @@ function RequestHeadersAndBody({ request }: { request: RequestDocument }) {
       <AccordionItem value="item-1">
         <AccordionTrigger>Headers</AccordionTrigger>
         <AccordionContent>
-          <SimpleCodeBlock content={readableHeaders}/>
+          <SimpleCodeBlock>{readableHeaders}</SimpleCodeBlock>
         </AccordionContent>
       </AccordionItem>
       <AccordionItem value="item-2">
@@ -204,7 +204,7 @@ function SimpleCodeBlock({
         {content && <pre>{content}</pre>}
         {children}
       </ItemContent>
-      {copyButtonVisible && content && <CopyButton content={content} />}
+      {copyButtonVisible && (content || children) && <CopyButton content={content} />}
     </Item>
   )
 }
