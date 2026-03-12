@@ -29,26 +29,37 @@ import { Button } from "@/components/ui/button"
 import { ButtonGroup } from "@/components/ui/button-group"
 import { Item, ItemContent, ItemMedia } from "@/components/ui/item"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Spinner } from "@/components/ui/spinner.tsx"
 
 import { useParams, useNavigate } from "react-router"
 import { env } from "@/config/env"
 import * as binService from "./fetch_bins.ts"
 import { useEffect, useState } from "react"
 import type { BinWithRequests, RequestDocument } from "@/types/request.ts"
+import { toast } from "sonner"
 
 export default function BinView() {
   const [bin, setBin] = useState<BinWithRequests | null>(null)
+  const [loading, setLoading] = useState(true)
   const { id } = useParams()
   const nav = useNavigate()
 
   async function getBin(id: string) {
     setBin(await binService.getBin(id))
+    setLoading(false)
   }
 
-  async function deleteBin(id: string | null) {
+  async function deleteBin(id: string | undefined) {
     if (!id) return
     await binService.deleteBin(id)
     nav("/")
+    toast.success(`Bin ${id} has been deleted`)
+  }
+
+  async function refreshBin() {
+    if (!id) return
+    setLoading(true)
+    await getBin(id)
   }
 
   useEffect(() => {
@@ -58,17 +69,23 @@ export default function BinView() {
   return (
     <div>
       <NavBar>
-        <BasketEditButtonBar deleteBinCB={() => deleteBin(id)} />
+        <BasketEditButtonBar
+          deleteBinCB={() => deleteBin(id)}
+          refresh={refreshBin}
+        />
       </NavBar>
       <BasketInfoHeader bin={bin} />
-      <RequestList requests={bin && bin.requests} />
+      {loading ? (
+        <Spinner className="mx-auto size-14" />
+      ) : (
+        <RequestList requests={bin && bin.requests} />
+      )}
     </div>
   )
 }
 
 function BasketInfoHeader({ bin }: { bin: BinWithRequests | null }) {
   const basketUrl = env.APP_URL + "/" + (bin && bin.bin.id)
-  console.log(bin)
 
   return (
     <section className="mx-auto max-w-4xl p-3">
@@ -195,13 +212,19 @@ function DateStamp({ received }: { received: Date }) {
 
 type BasketEditProps = {
   deleteBinCB: Function
+  refresh: Function
 }
 
-function BasketEditButtonBar({ deleteBinCB }: BasketEditProps) {
+function BasketEditButtonBar({ deleteBinCB, refresh }: BasketEditProps) {
   return (
     <ButtonGroup>
       <ButtonGroup className="flex">
-        <Button variant="outline" size="icon" aria-label="Refresh">
+        <Button
+          variant="outline"
+          size="icon"
+          aria-label="Refresh"
+          onClick={() => refresh()}
+        >
           <RefreshCwIcon />
         </Button>
         <Button variant="default" size="icon" aria-label="Auto-refresh">
