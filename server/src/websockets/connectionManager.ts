@@ -8,7 +8,7 @@ function init(server: Server): void {
   const wsServer = new WebSocketServer({ server, path: "/ws" });
 
   wsServer.on("connection", (websocket: WebSocket, request: IncomingMessage) => {
-    // If the client connects to ws://localhost:3000/ws?binId=a3Bx9k
+    // E.g. If the client connects to ws://localhost:3000/ws?binId=a3Bx9k
     const url = new URL(request.url || "", `http://${request.headers.host}`);
     const binId = url.searchParams.get("binId");
 
@@ -41,7 +41,6 @@ function init(server: Server): void {
   });
 }
 
-// todo: change request type
 function broadcast(binId: string, request: BroadcastRequest): void {
   const websocketConnections = binClients.get(binId);
 
