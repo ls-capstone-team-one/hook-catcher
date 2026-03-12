@@ -1,0 +1,42 @@
+[
+  {
+    "method": "GET",
+    "body": null
+  },
+  {
+    "method": "POST",
+    "body": {
+      "event": "push",
+      "repository": "hook-catcher",
+      "ref": "refs/heads/main"
+    }
+  },
+  {
+    "method": "PUT",
+    "body": {
+      "id": 42,
+      "status": "updated",
+      "payload": { "key": "value" }
+    }
+  },
+  {
+    "method": "DELETE",
+    "body": {
+      "id": 42
+    }
+  },
+  {
+    "method": "POST",
+    "body": {
+      "action": "opened",
+      "pull_request": { "number": 7, "title": "Add feature" }
+    }
+  },
+  {
+    "method": "PATCH",
+    "body": {
+      "id": 42,
+      "status": "closed"
+    }
+  }
+]

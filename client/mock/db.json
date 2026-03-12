@@ -1,0 +1,92 @@
+{
+  "bins": [
+    {
+      "id": "aBcDeFgHiJ",
+      "created_at": "2026-03-08T14:22:31Z",
+      "expires_at": "2026-03-22T14:22:31Z",
+      "request_count": 3
+    },
+    {
+      "id": "kLmNoPqRsT",
+      "created_at": "2026-03-10T09:05:12Z",
+      "expires_at": "2026-03-24T09:05:12Z",
+      "request_count": 1
+    },
+    {
+      "id": "uVwXyZ1234",
+      "created_at": "2026-03-01T20:45:00Z",
+      "expires_at": "2026-03-15T20:45:00Z",
+      "request_count": 0
+    }
+  ],
+  "requests": [
+    {
+      "id": "65f2a1b3c4d5e6f7a8b9c0d1",
+      "method": "POST",
+      "path": "/aBcDeFgHiJ",
+      "headers": {
+        "content-type": "application/json",
+        "user-agent": "curl/8.5.0",
+        "accept": "*/*",
+        "host": "localhost:3000"
+      },
+      "body": {
+        "event": "user.created",
+        "userId": 42,
+        "email": "alice@example.com"
+      },
+      "bin_id": "aBcDeFgHiJ",
+      "received_at": "2026-03-08T15:01:44Z"
+    },
+    {
+      "id": "65f2a1b3c4d5e6f7a8b9c0d2",
+      "method": "GET",
+      "path": "/aBcDeFgHiJ",
+      "headers": {
+        "user-agent": "Mozilla/5.0",
+        "accept": "text/html",
+        "accept-language": "en-US,en;q=0.9"
+      },
+      "body": {},
+      "bin_id": "aBcDeFgHiJ",
+      "received_at": "2026-03-09T08:33:12Z"
+    },
+    {
+      "id": "65f2a1b3c4d5e6f7a8b9c0d3",
+      "method": "PUT",
+      "path": "/aBcDeFgHiJ",
+      "headers": {
+        "content-type": "application/json",
+        "authorization": "Bearer tok_test_abc123",
+        "user-agent": "PostmanRuntime/7.36.0",
+        "accept": "application/json"
+      },
+      "body": {
+        "status": "active",
+        "metadata": {
+          "source": "webhook",
+          "retries": 0
+        }
+      },
+      "bin_id": "aBcDeFgHiJ",
+      "received_at": "2026-03-10T11:17:59Z"
+    },
+    {
+      "id": "65f2a1b3c4d5e6f7a8b9c0d4",
+      "method": "POST",
+      "path": "/kLmNoPqRsT",
+      "headers": {
+        "content-type": "application/x-www-form-urlencoded",
+        "user-agent": "GitHub-Hookshot/abc1234",
+        "x-github-event": "push",
+        "x-github-delivery": "e4f5g6h7-i8j9-k0l1-m2n3-o4p5q6r7s8t9"
+      },
+      "body": {
+        "ref": "refs/heads/main",
+        "repository": "octocat/Hello-World"
+      },
+      "bin_id": "kLmNoPqRsT",
+      "received_at": "2026-03-10T10:22:05Z"
+    }
+  ]
+}
