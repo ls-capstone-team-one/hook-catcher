@@ -178,7 +178,7 @@ function RequestHeadersAndBody({ request }: { request: RequestDocument }) {
       <AccordionItem value="item-2">
         <AccordionTrigger>Body</AccordionTrigger>
         <AccordionContent>
-          <SimpleCodeBlock content={JSON.stringify(request.body)} />
+          <SimpleCodeBlock content={request.body} />
         </AccordionContent>
       </AccordionItem>
     </Accordion>
