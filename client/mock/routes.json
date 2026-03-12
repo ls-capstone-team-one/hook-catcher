@@ -1,4 +1,0 @@
-{
-  "/api/bins": "/bins",
-  "/api/bins/:id": "/bins/:id"
-}
