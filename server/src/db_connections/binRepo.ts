@@ -34,6 +34,15 @@ export async function findRequestDocumentsByBinId(
   return result;
 }
 
+export async function findExpiredBins(): Promise<Bin[]> {
+  const client = await dbConnection.connect();
+
+  const queryString = "SELECT * FROM bins WHERE expires_at < NOW()";
+  const result = await client.query(queryString);
+
+  return result.rows;
+}
+
 export async function getAllBins(): Promise<Bin[]> {
   const client = await dbConnection.connect();
 

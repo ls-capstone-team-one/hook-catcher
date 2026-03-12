@@ -6,6 +6,7 @@ import {
   getAllBins as repoGetAllBins,
   deleteBin as repoDeleteBin,
   deleteAllRequestDocumentsWithBinId,
+  findExpiredBins,
 } from "../db_connections/binRepo";
 import { Bin, BinResponse, BinWithRequestDocuments } from "../types";
 
@@ -61,4 +62,15 @@ export async function deleteBin(id: string): Promise<void> {
 
   await deleteAllRequestDocumentsWithBinId(id);
   await repoDeleteBin(id);
+}
+
+export async function cleanupExpiredBins(): Promise<number> {
+  const expiredBins = await findExpiredBins();
+
+  for (const bin of expiredBins) {
+    await deleteAllRequestDocumentsWithBinId(bin.id);
+    await deleteBin(bin.id);
+  }
+
+  return expiredBins.length;
 }

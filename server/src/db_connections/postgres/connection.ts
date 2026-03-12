@@ -20,7 +20,7 @@ let client: Client | null = null;
  */
 async function connect(config: ClientConfig = {}): Promise<Client> {
   if (client) {
-    console.warn("Already connected to the database.");
+    console.warn("Already connected to the PostgreSQL database.");
     return client;
   }
 
