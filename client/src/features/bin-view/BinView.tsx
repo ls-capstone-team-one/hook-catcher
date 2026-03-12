@@ -172,7 +172,7 @@ function RequestHeadersAndBody({ request }: { request: RequestDocument }) {
       <AccordionItem value="item-1">
         <AccordionTrigger>Headers</AccordionTrigger>
         <AccordionContent>
-          <SimpleCodeBlock>{readableHeaders}</SimpleCodeBlock>
+          <SimpleCodeBlock content={readableHeaders}/>
         </AccordionContent>
       </AccordionItem>
       <AccordionItem value="item-2">
