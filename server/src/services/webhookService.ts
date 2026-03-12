@@ -5,6 +5,7 @@ import {
   createRequestRecord,
 } from "../db_connections/webhookRepo";
 import { RequestDocument, RequestRecord } from "../types";
+import wsManager from "../websockets/connectionManager";
 
 export async function captureRequest(
   binId: string,
@@ -46,8 +47,14 @@ export async function captureRequest(
     mongoId,
     method,
     path,
-    received_at,
+    received_at
   );
+
+  //6. Push new incoming requests to client via websocket
+  wsManager.broadcast(binId, {
+    type: "new_request", 
+    payload: document,
+  })
 
   return requestRecord;
 }
