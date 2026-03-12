@@ -31,7 +31,7 @@ import { Item, ItemContent, ItemMedia } from "@/components/ui/item";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 import { useParams } from "react-router";
-import { env } from "@/config/env";
+import { backendOrigin } from "@/config/env";
 import * as binService from "./fetch_bins.ts";
 import { useEffect, useState } from "react";
 import type { BinWithRequests, RequestDocument } from "@/types/request.ts";
@@ -88,14 +88,14 @@ export default function BinView() {
 }
 
 function BasketInfoHeader({ bin }: { bin: BinWithRequests | null }) {
-  const basketUrl = env.APP_URL + "/" + (bin && bin.bin.id)
-  console.log(bin)
+  const basketUrl = bin ? `${backendOrigin}/${bin.bin.id}` : null
 
   return (
     <section className="mx-auto max-w-4xl p-3">
       <h1 className="text-2xl font-bold">Basket: {bin && bin.bin.id}</h1>
       <p>
-        Bin URL: {basketUrl} <CopyButton content={basketUrl} />
+        Bin URL: {basketUrl}
+        {basketUrl && <CopyButton content={basketUrl} />}
       </p>
       <p>Request Count: {bin && bin.requests.length}</p>
     </section>

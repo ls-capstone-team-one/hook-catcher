@@ -5,7 +5,7 @@ import {
   CardFooter,
   CardHeader,
 } from "@/components/ui/card";
-import { env } from "@/config/env";
+import { backendOrigin } from "@/config/env";
 import { Link } from "react-router-dom";
 import CopyButton from "./button-copy";
 import type { PersistedBin } from "./schema";
@@ -32,7 +32,7 @@ export function CreateBinResultModal({
   const title = isSuccess ? "Created" : "Failed to Create Bin";
   const sendUrl = binId ? `/${binId}` : null;
   const inspectUrl = binId ? `/bins/${binId}` : null;
-  const fullSendUrl = sendUrl ? `${env.APP_URL}${sendUrl}` : null;
+  const fullSendUrl = sendUrl ? `${backendOrigin}${sendUrl}` : null;
 
   return (
     <div
