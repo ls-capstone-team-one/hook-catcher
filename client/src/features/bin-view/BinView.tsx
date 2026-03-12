@@ -75,7 +75,7 @@ function BasketInfoHeader({ bin }: { bin: BinWithRequests | null }) {
   )
 }
 
-function RequestList({ requests }: { requests: RequestDocument[] }) {
+function RequestList({ requests }: { requests: RequestDocument[] | null }) {
   return (
     <section className="mx-auto grid max-w-4xl grid-cols-[repeat(auto-fill,minmax(28rem,1fr))] items-start">
       {requests &&
@@ -104,32 +104,24 @@ function RequestDetails({ request }: { request: RequestDocument }) {
   )
 }
 
-function RequestHeadersAndBody({ request }: { request: RequestDocument} ) {
-  const codePlaceholder = `Accept: */* Connection: close Content-Length: 9 Content-Type:
-            application/x-www-form-urlencoded User-Agent: curl/7.81.0 X-City:
-            Durham X-Country: US X-Forwarded-For: 108.83.203.18 X-Real-Ip:
-            108.83.203.18`
-
-  const readableHeaders = Object.entries(request.headers)
-    .map((entry) => {
-      const [header, value] = entry
-      return <div className="m-0" key={header}>{`${header}: ${value}`}</div>
-    })
+function RequestHeadersAndBody({ request }: { request: RequestDocument }) {
+  const readableHeaders = Object.entries(request.headers).map((entry) => {
+    const [header, value] = entry
+    return <div className="m-0" key={header}>{`${header}: ${value}`}</div>
+  })
 
   return (
     <Accordion type="single" collapsible defaultValue="item-1">
       <AccordionItem value="item-1">
         <AccordionTrigger>Headers</AccordionTrigger>
         <AccordionContent>
-          <SimpleCodeBlock>
-            {readableHeaders}
-          </SimpleCodeBlock>
+          <SimpleCodeBlock>{readableHeaders}</SimpleCodeBlock>
         </AccordionContent>
       </AccordionItem>
       <AccordionItem value="item-2">
         <AccordionTrigger>Body</AccordionTrigger>
         <AccordionContent>
-          <SimpleCodeBlock content={`"hello": "world"`} />
+          <SimpleCodeBlock content={JSON.stringify(request.body)} />
         </AccordionContent>
       </AccordionItem>
     </Accordion>
@@ -139,19 +131,21 @@ function RequestHeadersAndBody({ request }: { request: RequestDocument} ) {
 type SimpleCodeBlockProps = {
   content?: string
   copyButtonVisible?: boolean
+  children?: React.ReactNode
 }
 
 function SimpleCodeBlock({
   content,
   copyButtonVisible = true,
+  children,
 }: SimpleCodeBlockProps) {
   return (
     <Item className="bg-secondary">
       <ItemContent>
-        {content ? <p>{content}</p>}
+        {content && <p>{content}</p>}
         {children}
       </ItemContent>
-      {copyButtonVisible && <CopyButton content={content} />}
+      {copyButtonVisible && content && <CopyButton content={content} />}
     </Item>
   )
 }

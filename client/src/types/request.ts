@@ -6,7 +6,9 @@ export const RequestDocumentSchema = z.object({
   method: z.string(),
   path: z.string(),
   headers: z.record(z.string(), z.unknown()),
-  body: z.record(z.string(), z.unknown()),
+  body: z.unknown().transform((val) =>                                                      
+    typeof val === "string" ? val : JSON.stringify(val)                          
+  ),
   bin_id: z.string(),
   received_at: z.coerce.date(),
 });
