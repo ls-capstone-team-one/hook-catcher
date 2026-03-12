@@ -81,7 +81,8 @@ export default function BinView() {
       const nextBin = await binService.getBin(id as string)
 
       if (isSubscribed) {
-        setBin(nextBin);
+        setBin(nextBin)
+        setLoading(false)
       }
     }
 
