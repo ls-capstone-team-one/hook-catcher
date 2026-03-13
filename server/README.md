@@ -47,6 +47,7 @@ Connection files for both databases are in `src/db_connections`, each in their c
    ```
 
 If you're not sure what username and password to use:
+
 ```bash
 # get your username
 psql -c "SELECT current_user;"
@@ -58,9 +59,9 @@ psql -c "ALTER USER <username> PASSWORD '<new_passowrd>';"
 #### Running databases locally
 
 Background info:
+
 - `mongod` / `postgresql` are the server processes
 - `mongosh` / `psql` are the client applications that allow you to connect to the server via your shell
-
 
 ##### MacOS
 
@@ -86,12 +87,12 @@ Background info:
 
 Both `postgresql` and `mongodb-community` should be listed with a status of `started` after the above command is run.
 
-
 ##### Linux
 
 Written for Ubuntu 22.04 LTS, may vary for other OS
 
 Check to see if it's already installed
+
 ```bash
 psql  # should launch the postgresql client without errors
 # or
@@ -99,6 +100,7 @@ dpkg -l postgresql postgresql-contrib  # should list both packages & versions
 ```
 
 To install and run PostgreSQL:
+
 ```bash
 sudo apt update
 sudo apt install postgresql postgresql-contrib
@@ -106,6 +108,7 @@ sudo systemctl status postgresql  # service should be running
 ```
 
 If the service isn't running, then start it and enable run on startup:
+
 ```bash
 sudo systemctl start postgresql
 sudo systemctl enable postgresql
@@ -115,11 +118,13 @@ To install and run MongoDB:
 Follow the [instructions](https://www.mongodb.com/docs/manual/administration/install-community/?operating-system=linux&linux-distribution=red-hat&linux-package=default&search-linux=with-search-linux) for installing the MongoDB Self-managed Community Edition
 
 Start the `mongod` process:
+
 ```
 sudo systemctl start mongod
 ```
 
 Expected output:
+
 ```bash
 $ sudo systemctl status mongod
 ● mongod.service - MongoDB Database Server
@@ -134,12 +139,12 @@ $ sudo systemctl status mongod
 ```
 
 If you get an error with `status=14`, try enabling read permissions and re-trying:
+
 ```bash
 sudo chown -R mongodb:mongodb /var/lib/mongodb
 sudo chown -R mongodb:mongodb /var/log/mongodb
 sudo chown mongodb:mongodb /tmp/mongodb-27017.sock
 ```
-
 
 3. To ensure both databases are running:
    ```bash
@@ -149,7 +154,9 @@ sudo chown mongodb:mongodb /tmp/mongodb-27017.sock
 ### Prep the databases for first run
 
 #### Postgres
+
 Create the database and ensure the creation was successful:
+
 ```bash
 sudo -u postgres createdb hookcatcher
 
@@ -158,15 +165,15 @@ sudo -u postgres psql -l | grep hookcatcher
 ```
 
 Create the schema
+
 ```bash
 # assumes that you're in the project root
 psql -d hookcatcher -f ./src/db_connections/postgres/schema.sql
 ```
 
 #### Mongo
-No manual setup is needed for MongoDB. Unlike PostgreSQL, MongoDB creates databases and collections automatically on first write. As long as mongod is running, the app will auto-create the hookcatcher database and request_payloads collection when the first webhook is captured. 
 
-
+No manual setup is needed for MongoDB. Unlike PostgreSQL, MongoDB creates databases and collections automatically on first write. As long as mongod is running, the app will auto-create the hookcatcher database and request_payloads collection when the first webhook is captured.
 
 ### Backend Structure
 
@@ -180,3 +187,5 @@ src/
 ```
 
 **Handler → Service → Repo(db_connections)** — handlers receive HTTP requests and delegate to services, services contain business logic and delegate to repos, repos talk to the databases.
+
+![alt text](code-architecture-diagram.png)
