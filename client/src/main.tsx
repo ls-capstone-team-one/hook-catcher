@@ -10,8 +10,8 @@ import { StrictMode } from "react"
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <ThemeProvider>
-      <App />
-      <Toaster />
+        <App />
+        <Toaster />
     </ThemeProvider>
   </StrictMode>
 )
