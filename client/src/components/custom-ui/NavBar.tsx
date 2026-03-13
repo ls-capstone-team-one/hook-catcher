@@ -26,7 +26,7 @@ export default function NavBar({ children }: { children?: ReactNode }) {
               <NavigationMenuLink className="text-lg" asChild>
                 <Link to="/">
                   <FishingHook className="relative -left-2.5 scale-150" />
-                  HooksCatcher
+                  HookCatcher
                 </Link>
               </NavigationMenuLink>
             </NavigationMenuItem>

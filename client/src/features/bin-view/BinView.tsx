@@ -3,7 +3,7 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion";
+} from "@/components/ui/accordion"
 
 import {
   Clock,
@@ -30,7 +30,7 @@ import {
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
-} from "@/components/ui/dropdown-menu";
+} from "@/components/ui/dropdown-menu"
 
 import NavBar from "@/components/custom-ui/NavBar.tsx"
 import CopyButton from "@/components/custom-ui/Button_Copy.tsx"
@@ -43,10 +43,10 @@ import { Spinner } from "@/components/ui/spinner.tsx"
 import { useParams, useNavigate } from "react-router"
 import { env } from "@/config/env"
 import * as binService from "./fetch_bins.ts"
-import { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import type { BinWithRequests, RequestDocument } from "@/types/request.ts"
 import { toast } from "sonner"
-import useBinWebSocket from "@/hooks/useBinWebSocket.ts";
+import useBinWebSocket from "@/hooks/useBinWebSocket.ts"
 
 export default function BinView() {
   const [bin, setBin] = useState<BinWithRequests | null>(null)
@@ -73,9 +73,9 @@ export default function BinView() {
   }
 
   useEffect(() => {
-    if (!id) return;
+    if (!id) return
 
-    let isSubscribed = true;
+    let isSubscribed = true
 
     async function loadBin() {
       const nextBin = await binService.getBin(id as string)
@@ -86,10 +86,10 @@ export default function BinView() {
       }
     }
 
-    loadBin();
+    loadBin()
 
     return () => {
-      isSubscribed = false;
+      isSubscribed = false
     }
   }, [id])
 
@@ -97,13 +97,13 @@ export default function BinView() {
     binId: id,
     onNewRequest: (request) => {
       setBin((currentBin) => {
-        if (!currentBin) return currentBin;
+        if (!currentBin) return currentBin
 
         return {
           ...currentBin,
           requests: [request, ...currentBin.requests],
-        };
-      });
+        }
+      })
     },
   })
 
@@ -122,7 +122,7 @@ export default function BinView() {
         <RequestList requests={bin && bin.requests} />
       )}
     </div>
-  );
+  )
 }
 
 function BasketInfoHeader({ bin }: { bin: BinWithRequests | null }) {
@@ -137,7 +137,7 @@ function BasketInfoHeader({ bin }: { bin: BinWithRequests | null }) {
       </p>
       <p>Request Count: {bin && bin.requests.length}</p>
     </section>
-  );
+  )
 }
 
 function RequestList({ requests }: { requests: RequestDocument[] | null }) {
@@ -151,7 +151,7 @@ function RequestList({ requests }: { requests: RequestDocument[] | null }) {
           return <RequestDetails key={req._id} request={req} />
         })}
     </section>
-  );
+  )
 }
 
 function EmptyRequestList() {
@@ -167,9 +167,6 @@ function EmptyRequestList() {
             Send a request to the above URL and your request will appear here!
           </EmptyDescription>
         </EmptyHeader>
-        {/* <EmptyContent> */}
-        {/* <Button>Add data</Button> */}
-        {/* </EmptyContent> */}
       </Empty>
     </div>
   )
@@ -190,17 +187,17 @@ function RequestDetails({ request }: { request: RequestDocument }) {
         </CardContent>
       </Card>
     </section>
-  );
+  )
 }
 
 function RequestHeadersAndBody({ request }: { request: RequestDocument }) {
   const readableHeaders = Object.entries(request.headers).map((entry) => {
     const [header, value] = entry
     return <div className="m-0" key={header}>{`${header}: ${value}`}</div>
-  });
+  })
 
   return (
-    <Accordion type="single" collapsible defaultValue="item-1">
+    <Accordion type="single" collapsible defaultValue="">
       <AccordionItem value="item-1">
         <AccordionTrigger>Headers</AccordionTrigger>
         <AccordionContent>
@@ -216,7 +213,7 @@ function RequestHeadersAndBody({ request }: { request: RequestDocument }) {
         </AccordionContent>
       </AccordionItem>
     </Accordion>
-  );
+  )
 }
 
 type SimpleCodeBlockProps = {
@@ -280,6 +277,11 @@ function DateStamp({ received }: { received: Date }) {
   )
 }
 
+function notYetImplemented(ev: React.MouseEvent) {
+  ev.preventDefault()
+  toast.error("Not yet implemented")
+}
+
 type BasketEditProps = {
   deleteBinCB: Function
   refresh: Function
@@ -293,11 +295,18 @@ function BasketEditButtonBar({ deleteBinCB, refresh }: BasketEditProps) {
           variant="outline"
           size="icon"
           aria-label="Refresh"
+          title="Refresh"
           onClick={() => refresh()}
         >
           <RefreshCwIcon />
         </Button>
-        <Button variant="default" size="icon" aria-label="Auto-refresh">
+        <Button
+          variant="default"
+          size="icon"
+          aria-label="Auto-refresh"
+          title="Auto-refresh"
+          onClick={notYetImplemented}
+        >
           <RotateCwIcon />
         </Button>
       </ButtonGroup>
@@ -305,13 +314,18 @@ function BasketEditButtonBar({ deleteBinCB, refresh }: BasketEditProps) {
       <ButtonGroup>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="destructive" size="icon" aria-label="More Options">
+            <Button
+              variant="destructive"
+              size="icon"
+              aria-label="More Options"
+              title="Deletion Menu"
+            >
               <Trash />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-60">
             <DropdownMenuGroup>
-              <DropdownMenuItem>
+              <DropdownMenuItem onClick={notYetImplemented}>
                 <Shredder />
                 Delete all requests
               </DropdownMenuItem>
