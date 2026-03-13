@@ -130,7 +130,7 @@ function BasketInfoHeader({ bin }: { bin: BinWithRequests | null }) {
 
   return (
     <section className="mx-auto max-w-4xl p-3">
-      <h1 className="text-2xl font-bold">Basket: {bin && bin.bin.id}</h1>
+      <h1 className="text-2xl font-bold">Bin: {bin && bin.bin.id}</h1>
       <p>
         Bin URL: {basketUrl}
         {basketUrl && <CopyButton content={basketUrl} />}

@@ -8,18 +8,12 @@ import {
 } from "@/components/ui/navigation-menu"
 
 import { useHideOnScrollDown } from "@/hooks/useHideOnScrollDown"
-import React, { type ReactNode } from "react"
+import { type ReactNode } from "react"
 import { FishingHook } from "lucide-react"
-import { useNavigate } from "react-router"
+import { Link } from "react-router"
 
 export default function NavBar({ children }: { children?: ReactNode }) {
   const hidden = useHideOnScrollDown()
-  const navigate = useNavigate()
-
-  function goHome(ev: React.MouseEvent) {
-    ev.preventDefault();
-    navigate("/")
-  }
 
   return (
     <div
@@ -29,9 +23,11 @@ export default function NavBar({ children }: { children?: ReactNode }) {
         <div>
           <NavigationMenuList>
             <NavigationMenuItem>
-              <NavigationMenuLink className="text-lg" href="/" onClick={goHome}>
-                <FishingHook className="relative -left-2.5 scale-150" />
-                HooksCatcher
+              <NavigationMenuLink className="text-lg" asChild>
+                <Link to="/">
+                  <FishingHook className="relative -left-2.5 scale-150" />
+                  HooksCatcher
+                </Link>
               </NavigationMenuLink>
             </NavigationMenuItem>
           </NavigationMenuList>

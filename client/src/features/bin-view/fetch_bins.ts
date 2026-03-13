@@ -19,6 +19,6 @@ export async function deleteBin(id: string) {
     method: "DELETE",
   })
   if (!response.ok) {
-    throw new Error(`Deletion of basket ${id} was unsuccessful.`)
+    throw new Error(`Deletion of bin ${id} was unsuccessful.`)
   }
 }
