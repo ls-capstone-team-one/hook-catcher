@@ -189,3 +189,7 @@ src/
 **Handler → Service → Repo(db_connections)** — handlers receive HTTP requests and delegate to services, services contain business logic and delegate to repos, repos talk to the databases.
 
 ![alt text](code-architecture-diagram.png)
+
+### Design Decisions
+
+![Backend implementation decisions](design-decisions.png)
