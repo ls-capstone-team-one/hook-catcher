@@ -52,3 +52,6 @@ ${Object.entries(parsedEnv.error.flatten().fieldErrors)
 }
 
 export const env = createEnv()
+
+export const backendUrl = new URL(env.API_URL)
+export const backendOrigin = backendUrl.origin

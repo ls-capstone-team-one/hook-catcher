@@ -3,7 +3,7 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion"
+} from "@/components/ui/accordion";
 
 import {
   Clock,
@@ -13,7 +13,7 @@ import {
   Shredder,
   Trash,
   Trash2,
-} from "lucide-react"
+} from "lucide-react";
 
 import {
   DropdownMenu,
@@ -21,33 +21,60 @@ import {
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
-} from "@/components/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu";
 
-import NavBar from "@/components/custom-ui/nav-bar"
-import CopyButton from "@/components/custom-ui/button-copy"
-import { Button } from "@/components/ui/button"
-import { ButtonGroup } from "@/components/ui/button-group"
-import { Item, ItemContent, ItemMedia } from "@/components/ui/item"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import NavBar from "@/components/custom-ui/nav-bar";
+import CopyButton from "@/components/custom-ui/button-copy";
+import { Button } from "@/components/ui/button";
+import { ButtonGroup } from "@/components/ui/button-group";
+import { Item, ItemContent, ItemMedia } from "@/components/ui/item";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-import { useParams } from "react-router"
-import { env } from "@/config/env"
-import * as binService from "./fetch_bins.ts"
-import { useEffect, useState } from "react"
-import type { BinWithRequests, RequestDocument } from "@/types/request.ts"
+import { useParams } from "react-router";
+import { backendOrigin } from "@/config/env";
+import * as binService from "./fetch_bins.ts";
+import { useEffect, useState } from "react";
+import type { BinWithRequests, RequestDocument } from "@/types/request.ts";
+import { useBinWebSocket } from "@/hooks/useBinWebSocket";
 
 export default function BinView() {
-  const [bin, setBin] = useState<BinWithRequests | null>(null)
+  const [bin, setBin] = useState<BinWithRequests | null>(null);
 
-  const { id } = useParams()
-
-  async function getBin(id: string) {
-    setBin(await binService.getBin(id))
-  }
+  const { id } = useParams();
 
   useEffect(() => {
-    id && getBin(id)
-  }, [])
+    if (!id) return;
+
+    let isSubscribed = true;
+
+    async function loadBin() {
+      const nextBin = await binService.getBin(id as string)
+
+      if (isSubscribed) {
+        setBin(nextBin);
+      }
+    }
+
+    loadBin();
+
+    return () => {
+      isSubscribed = false;
+    }
+  }, [id])
+
+  useBinWebSocket({
+    binId: id,
+    onNewRequest: (request) => {
+      setBin((currentBin) => {
+        if (!currentBin) return currentBin;
+
+        return {
+          ...currentBin,
+          requests: [request, ...currentBin.requests],
+        };
+      });
+    },
+  })
 
   return (
     <div>
@@ -57,22 +84,22 @@ export default function BinView() {
       <BasketInfoHeader bin={bin} />
       <RequestList requests={bin && bin.requests} />
     </div>
-  )
+  );
 }
 
 function BasketInfoHeader({ bin }: { bin: BinWithRequests | null }) {
-  const basketUrl = env.APP_URL + "/" + (bin && bin.bin.id)
-  console.log(bin)
+  const basketUrl = bin ? `${backendOrigin}/${bin.bin.id}` : null
 
   return (
     <section className="mx-auto max-w-4xl p-3">
       <h1 className="text-2xl font-bold">Basket: {bin && bin.bin.id}</h1>
       <p>
-        Bin URL: {basketUrl} <CopyButton content={basketUrl} />
+        Bin URL: {basketUrl}
+        {basketUrl && <CopyButton content={basketUrl} />}
       </p>
       <p>Request Count: {bin && bin.requests.length}</p>
     </section>
-  )
+  );
 }
 
 function RequestList({ requests }: { requests: RequestDocument[] | null }) {
@@ -83,7 +110,7 @@ function RequestList({ requests }: { requests: RequestDocument[] | null }) {
           return <RequestDetails key={req._id} request={req} />
         })}
     </section>
-  )
+  );
 }
 
 function RequestDetails({ request }: { request: RequestDocument }) {
@@ -101,14 +128,14 @@ function RequestDetails({ request }: { request: RequestDocument }) {
         </CardContent>
       </Card>
     </section>
-  )
+  );
 }
 
 function RequestHeadersAndBody({ request }: { request: RequestDocument }) {
   const readableHeaders = Object.entries(request.headers).map((entry) => {
     const [header, value] = entry
     return <div className="m-0" key={header}>{`${header}: ${value}`}</div>
-  })
+  });
 
   return (
     <Accordion type="single" collapsible defaultValue="item-1">
@@ -125,7 +152,7 @@ function RequestHeadersAndBody({ request }: { request: RequestDocument }) {
         </AccordionContent>
       </AccordionItem>
     </Accordion>
-  )
+  );
 }
 
 type SimpleCodeBlockProps = {
