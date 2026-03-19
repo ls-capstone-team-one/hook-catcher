@@ -3,4 +3,5 @@ node_modules/
 
 # Temporary files
 temp.json
-.DS_Store.DS_Store
+
+.DS_Store
